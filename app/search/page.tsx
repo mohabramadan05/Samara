@@ -101,6 +101,12 @@ function SearchResults() {
                     <div className={styles.noResults}>
                         <h2>No products found</h2>
                         <p>Try searching with different keywords or browse our categories.</p>
+                        <button 
+                            className={styles.backToHomeButton}
+                            onClick={() => window.location.href = '/'}
+                        >
+                            Back to Home
+                        </button>
                     </div>
                 )}
 

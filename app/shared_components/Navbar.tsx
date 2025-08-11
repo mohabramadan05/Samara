@@ -292,9 +292,12 @@ const Navbar = () => {
                 </div>
 
                 <div className={styles.rightSection}>
-                    <button className={styles.mobileMenuButton} onClick={toggleSearch}>
-                        <FontAwesomeIcon icon={faSearch} />
-                    </button>
+                    {/* Hide search toggle on mobile since we show a full-width bar below */}
+                    {!isMobile && (
+                        <button className={styles.mobileMenuButton} onClick={toggleSearch}>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </button>
+                    )}
 
                     <form onSubmit={handleSearch} className={`${styles.searchBar} ${isSearchOpen ? styles.active : ''}`}>
                         <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
@@ -327,9 +330,9 @@ const Navbar = () => {
 
                     <Link href="/shopping-cart" className={styles.cartButton}>
                         <FontAwesomeIcon icon={faBagShopping} />
-                        {cartItemCount > 0 && (
-                            <span className={styles.cartBadge}>{cartItemCount}</span>
-                        )}
+
+                        <span className={styles.cartBadge}>{cartItemCount}</span>
+
                     </Link>
 
 
@@ -398,6 +401,19 @@ const Navbar = () => {
                     )}
                 </div>
             </div>
+
+            {/* Dedicated mobile search bar below the header */}
+            {isMobile && (
+                <form onSubmit={handleSearch} className={styles.mobileSearchBar}>
+                    <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
+                    <input
+                        type="text"
+                        placeholder="search ..."
+                        value={searchQuery}
+                        onChange={handleSearchInputChange}
+                    />
+                </form>
+            )}
         </nav>
     );
 };

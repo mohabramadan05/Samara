@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './BonusWallet.module.css';
 import { User } from '@supabase/supabase-js';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 interface BonusWalletProps {
     user: User;
@@ -14,12 +12,7 @@ const BonusWallet: React.FC<BonusWalletProps> = ({ user }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
     useEffect(() => {
         const fetchWalletData = async () => {
             try {

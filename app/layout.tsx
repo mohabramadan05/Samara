@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Aclonica } from "next/font/google";
 import Footer from './shared_components/Footer';
 import { Providers } from './providers';
+import NotificationStack from './shared_components/NotificationStack';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${aclonica.variable}`}>
         <Providers>
           {children}
+          <NotificationStack />
           <Footer />
         </Providers>
       </body>

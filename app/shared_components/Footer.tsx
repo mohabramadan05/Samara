@@ -103,7 +103,7 @@ const Footer = () => {
                             <ul className={styles.linksList} style={{
                                 display: collapsedSections.company ? 'none' : 'block'
                             }}>
-                                <li><Link href="/search">Search</Link></li>
+                                {/* <li><Link href="/search">Search</Link></li> */}
                                 <li><Link href="/profile">Your Account</Link></li>
                                 <li><Link href="/delivery-coverage">Delivery Coverage</Link></li>
                                 <li><Link href="/health">Health and wellbeing</Link></li>
@@ -150,7 +150,7 @@ const Footer = () => {
                             <ul className={styles.linksList} style={{
                                 display: collapsedSections.shopDeals ? 'none' : 'block'
                             }}>
-                                <li><Link href="category/hot-deals">Hot deal</Link></li>
+                                <li><Link href="/category/hot-deals">Hot deal</Link></li>
                                 <li><Link href="/50-discount-deal">50% deal</Link></li>
                                 <li><Link href="/points-deal">Points deal</Link></li>
                                 <li><Link href="/delivery-deal">Delivery deal</Link></li>
@@ -158,9 +158,6 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div className={styles.bottomSection}>
-                    Developed By Comma Creative Solutions
                 </div>
             </footer>
             <NewsletterDialog isOpen={showNewsletter} onClose={() => setShowNewsletter(false)} />

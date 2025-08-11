@@ -3,17 +3,10 @@
 import Image from 'next/image';
 import styles from './Policies.module.css';
 import donate from '../../assets/logo.png';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import Link from 'next/link';
 
 const Policies = () => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     return (
         <section className={styles.policies}>
@@ -167,8 +160,8 @@ const Policies = () => {
             <h4 data-aos="fade-up">Contact Us</h4>
             <p data-aos="fade-up">
                 If you have any questions about this Privacy Policy, You can contact us:<br />
-                By email: <a href="mailto:support@samarahub.ie">support@samarahub.ie</a><br />
-                By visiting this page on our website: <a href="https://samarahub.ie/contact-us">https://samarahub.ie/contact-us</a>
+                By email: <Link href="mailto:support@samarahub.ie">support@samarahub.ie</Link><br />
+                By visiting this page on our website: <Link href="/contact-us">contact-us</Link>
             </p>
         </section>
     );

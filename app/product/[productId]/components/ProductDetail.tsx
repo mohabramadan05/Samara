@@ -12,8 +12,6 @@ import Image from 'next/image';
 import { useAuth } from '@/lib/authContext';
 import loadingGif from '../../../assets/loading_1.gif';
 import SimilarProducts from './SimilarProducts';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 interface ProductDetailProps {
     productId: string;
@@ -87,12 +85,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
         fetchProduct();
     }, [productId]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     useEffect(() => {
         if (showPopup) {
@@ -100,7 +93,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
             return () => clearTimeout(timer);
         }
     }, [showPopup]);
-    
+
     const handleAddToCart = async () => {
         if (!isAuthenticated || !user) {
             window.location.href = '/login?redirect=back';
@@ -186,6 +179,8 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                         rating={245}
                         sold_amount={product.sold_amount || 0}
                         remaining_amount={product.remaining_amount || 0}
+                        images={product.images}
+                        image={product.image}
                     />
 
 

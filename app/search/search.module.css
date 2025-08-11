@@ -101,6 +101,48 @@
     line-height: 1.6;
 }
 
+/* Enhanced Back to Home button */
+.backToHomeButton {
+    appearance: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, #F1B901, #CE9E00);
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 24px rgba(206, 158, 0, 0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    margin-top: 18px;
+}
+
+.backToHomeButton::before {
+    content: '←';
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.backToHomeButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 14px 30px rgba(241, 185, 1, 0.35);
+    filter: brightness(1.02);
+}
+
+.backToHomeButton:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px rgba(241, 185, 1, 0.28);
+}
+
+.backToHomeButton:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3), 0 8px 22px rgba(241, 185, 1, 0.28);
+}
+
 .productsGrid {
     max-width: 1200px;
     margin: 0 auto;

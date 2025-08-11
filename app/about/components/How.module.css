@@ -140,6 +140,7 @@
 @media (max-width: 768px) {
     .how {
         padding: 40px 30px;
+
     }
 
     .how h1 {
@@ -168,6 +169,7 @@
 @media (max-width: 480px) {
     .how {
         padding: 30px 20px;
+        flex-direction: column-reverse;
     }
 
     .how h1 {

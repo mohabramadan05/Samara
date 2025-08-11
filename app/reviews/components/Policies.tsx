@@ -4,8 +4,6 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 function getInitials(name: string) {
     if (!name) return '';
@@ -57,12 +55,7 @@ const Policies = () => {
             });
     }, [page]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     const totalPages = Math.ceil(total / PAGE_SIZE);
 

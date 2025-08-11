@@ -125,6 +125,12 @@ const Dashboard = () => {
                         <p>View sales and analytics data</p>
                     </Link>
 
+                    {adminData.username === 'admin' && <Link href="/samara/dashboard/admin-users" className={styles.card}>
+                        <div className={styles.cardIcon}>🛡️</div>
+                        <h3>Admin Users</h3>
+                        <p>Manage admin accounts and permissions</p>
+                    </Link>
+                    }
 
 
 

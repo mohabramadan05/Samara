@@ -3,9 +3,7 @@ import React from 'react';
 import styles from './ProfileSidebar.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faMapMarkerAlt, faShoppingBag, faWallet, faHeart } from '@fortawesome/free-solid-svg-icons';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+
 
 
 interface ProfileSidebarProps {
@@ -14,12 +12,7 @@ interface ProfileSidebarProps {
 }
 
 const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ activeTab, setActiveTab }) => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
     const menuItems = [
         {
             id: 'profile-info',

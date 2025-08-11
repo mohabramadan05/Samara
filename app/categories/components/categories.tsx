@@ -10,8 +10,6 @@ import loadingGif from '../../assets/loading_1.gif'; // Fallback image
 import Image from 'next/image';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 interface Category {
     id: number;
@@ -25,12 +23,7 @@ const Categories = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     useEffect(() => {
         const fetchCategories = async () => {

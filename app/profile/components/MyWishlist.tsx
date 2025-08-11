@@ -3,8 +3,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import styles from '../profile.module.css';
 import { User } from '@supabase/supabase-js';
 import ProductCard from '@/app/shared_components/ProductCard';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import Image from 'next/image';
 import loadinga from '../../assets/loading_1.gif';
 
@@ -35,12 +33,7 @@ const MyWishlist: React.FC<MyWishlistProps> = ({ user }) => {
     const [sortOrder, setSortOrder] = useState<'newest' | 'oldest' | 'highest' | 'lowest'>('newest');
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    }, [wishlist, currentPage]);
+
     useEffect(() => {
         const fetchWishlist = async () => {
             setLoading(true);

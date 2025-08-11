@@ -5,17 +5,9 @@ import styles from './HumanityFirst.module.css';
 import donate from '../../assets/donate.png';
 import Masjid from '../../assets/Masjid.png';
 import Church from '../../assets/Church.png';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 const HumanityFirst = () => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     const downloadPdf = (path: string, filename: string) => {
         const link = document.createElement('a');

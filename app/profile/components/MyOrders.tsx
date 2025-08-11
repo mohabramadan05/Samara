@@ -4,8 +4,6 @@ import styles from './MyOrders.module.css';
 import { User } from '@supabase/supabase-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faEllipsisH, faSync, faEye } from '@fortawesome/free-solid-svg-icons';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import Image from 'next/image';
 import loadinga from '../../assets/loading_1.gif';
 
@@ -83,12 +81,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({ user }) => {
         totalPages: 0
     });
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
     const fetchUserPhone = useCallback(async () => {
         try {
             // Get the phone number directly from the provided user prop

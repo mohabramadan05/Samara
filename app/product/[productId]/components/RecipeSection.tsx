@@ -1,9 +1,6 @@
 'use client'
 import styles from './ProductDetail.module.css';
 import Image from 'next/image';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 interface RecipeSectionProps {
     recipes?: string;
@@ -14,12 +11,7 @@ const RecipeSection = ({ recipes, productImage }: RecipeSectionProps) => {
     // Default recipe if none provided
     const recipeText = recipes || "";
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     return (
         <div className={styles.recipeSectionhead}>

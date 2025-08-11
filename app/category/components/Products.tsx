@@ -6,8 +6,6 @@ import styles from './Products.module.css';
 import loadingGif from '../../assets/loading_1.gif'; // Fallback image
 import { useAuth } from '@/lib/authContext';
 import ProductCard from '@/app/shared_components/ProductCard';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import VegetablesPopup from './VegetablesPopup';
 import NewsletterDialog from '@/app/shared_components/NewsletterDialog';
 
@@ -100,13 +98,6 @@ const Products = ({ categoryId }: ProductsProps) => {
         fetchProducts();
     }, [categoryId, selectedCategories, minPrice, maxPrice, currentPage]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-
-    useEffect(() => {
-        AOS.refresh();
-    });
 
     // Fetch categories from API route
     useEffect(() => {

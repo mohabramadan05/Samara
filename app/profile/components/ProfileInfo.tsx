@@ -6,9 +6,6 @@ import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faPhone, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 interface ProfileInfoProps {
     user: User;
@@ -22,12 +19,6 @@ interface ProfileInfoProps {
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ user, userData }) => {
     const [loading, setLoading] = useState(false);
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
 
     const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files || e.target.files.length === 0) {

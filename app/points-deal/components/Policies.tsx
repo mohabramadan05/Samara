@@ -1,16 +1,8 @@
 'use client'
 import styles from './Policies.module.css';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 const Policies = () => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     return (
         <section className={styles.policies}>

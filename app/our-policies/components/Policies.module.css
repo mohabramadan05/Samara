@@ -33,6 +33,11 @@
     font-size: 1.2rem;
  }
 
+.policies a {
+    color: #FFD54A;
+    text-decoration: underline;
+}
+
 .donate {
     align-self: center;
 }

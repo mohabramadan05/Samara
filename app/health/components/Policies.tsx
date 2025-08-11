@@ -3,17 +3,8 @@ import Image from 'next/image';
 import styles from './Policies.module.css';
 import donate from '../../assets/logo.png';
 import health from '../../assets/healthimage.png';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 const Policies = () => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
 
     return (
         <section className={styles.policies}>

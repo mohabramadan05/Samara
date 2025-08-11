@@ -8,8 +8,6 @@ import { useAuth } from '@/lib/authContext';
 import ProductCard from '@/app/shared_components/ProductCard';
 import VegetablesPopup from './VegetablesPopup';
 import NewsletterDialog from '@/app/shared_components/NewsletterDialog';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 interface Product {
     id: number;
@@ -97,12 +95,7 @@ const Products = ({ categoryId, initialCategory }: ProductsProps) => {
         fetchProducts();
     }, [categoryId, selectedCategories, minPrice, maxPrice, currentPage]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     // Fetch categories from API route
     useEffect(() => {

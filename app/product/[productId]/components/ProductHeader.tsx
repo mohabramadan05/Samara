@@ -2,6 +2,12 @@ import styles from './ProductDetail.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faStar } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image';
+
+
+interface ProductImage {
+    image: string;
+}
 
 interface ProductHeaderProps {
     name: string;
@@ -15,9 +21,22 @@ interface ProductHeaderProps {
     description: string;
     sold_amount: number;
     remaining_amount: number;
+    image: string;
+    images: ProductImage[];
+
 }
 
-const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPrice, unitPrice, unit, supplier, rating, qty_per_unit, description }: ProductHeaderProps) => {
+
+
+const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPrice, unitPrice, unit, supplier, rating, qty_per_unit, description, image, images }: ProductHeaderProps) => {
+
+    const allImages = [
+        image,
+        ...(images && images.length > 0
+            ? images.map((img: ProductImage) => img.image)
+            : [])
+    ].filter(Boolean);
+
     return (
         <div className={styles.productHeader}>
             <div className={styles.titleContainer}>
@@ -29,6 +48,12 @@ const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPri
                     <FontAwesomeIcon icon={faStar} />
                     <span className={styles.pointsValue}>{rating} pt</span>
                 </div>
+            </div>
+
+            <div className={styles.productImageContainer2}>
+                {allImages.map((img, index) => (
+                    <Image className={styles.productImage2} key={index} src={img} alt={name} width={100} height={100} />
+                ))}
             </div>
 
             <div className={styles.productDescription}>

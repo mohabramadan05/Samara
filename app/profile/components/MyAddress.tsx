@@ -7,8 +7,6 @@ import { faPlus, faTrashCan, faExclamationTriangle } from '@fortawesome/free-sol
 import Image from 'next/image';
 import mapImg from '../../assets/map.png';
 import { supabase } from '@/lib/supabase';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import loadinga from '../../assets/loading_1.gif';
 
 interface City {
@@ -51,12 +49,7 @@ const MyAddress: React.FC<MyAddressProps> = ({ user }) => {
         floor: '',
         landmark: ''
     });
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
     const fetchAddresses = useCallback(async () => {
         try {
             setLoading(true);

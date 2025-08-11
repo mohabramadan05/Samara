@@ -9,8 +9,6 @@ import Image from 'next/image';
 import loadingGif from '../../../assets/loading_1.gif';
 import { useAuth } from '@/lib/authContext';
 import ProductCard from '@/app/shared_components/ProductCard';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 interface SimilarProductsProps {
     category: string;
@@ -65,12 +63,7 @@ const SimilarProducts = ({ category }: SimilarProductsProps) => {
         fetchSimilarProducts();
     }, [category]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
 
     // Add to cart

@@ -1,8 +1,5 @@
 'use client'
 import styles from './ProductDetail.module.css';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
 
 // Nutrition data structure
@@ -18,12 +15,7 @@ interface NutritionTableProps {
 }
 
 const NutritionTable = ({ nutritionData = [], productName }: NutritionTableProps) => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
 
     return (

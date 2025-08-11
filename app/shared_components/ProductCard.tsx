@@ -1,12 +1,14 @@
 'use client'
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar, faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import styles from './ProductCard.module.css';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState } from 'react';
+import { useWishlist } from '@/lib/wishlistContext';
 
 interface ProductCardProps {
     product: {
@@ -30,6 +32,8 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             setShowPopup(true);
         }
     };
+    const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+
     useEffect(() => {
         AOS.init({});
     }, []);
@@ -43,6 +47,21 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
             return () => clearTimeout(timer);
         }
     }, [showPopup]);
+
+    const isFavorite = isInWishlist(product.id);
+
+    const toggleFavorite = async (productId: number) => {
+        try {
+            if (isFavorite) {
+                await removeFromWishlist(productId);
+            } else {
+                await addToWishlist(productId);
+            }
+        } catch (err) {
+            // Fail silently; context handles error state
+            console.error('Wishlist toggle error:', err);
+        }
+    };
 
     return (
         <>
@@ -67,7 +86,7 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
                             height={150}
                             className={styles.productImage}
                         />
-                        {/* <button
+                        <button
                             className={styles.wishlistButton}
                             aria-label="Add to wishlist"
                             onClick={(e) => {
@@ -77,10 +96,10 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
                             }}
                         >
                             <FontAwesomeIcon
-                                icon={isFavorite ? faHeartSolid : faHeart}
+                                icon={isFavorite ? faHeartSolid : faHeartRegular}
                                 className={styles.wishlistIcon}
                             />
-                        </button> */}
+                        </button>
                     </div>
                     <div className={styles.middle_container}>
                         <div className={styles.middle_info_box}>

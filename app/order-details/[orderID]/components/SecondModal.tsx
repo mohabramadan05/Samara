@@ -104,6 +104,19 @@ const SecondModal: React.FC<Props> = ({ onClose }) => {
         }
     }, [boxOpen, walletData?.points]);
 
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+
+            if (!boxOpen) {
+                setBoxOpen(true);
+                fireConfetti();
+            }
+
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, []);
+
     return (
         <div className={styles.modalOverlay}>
             <div className={styles.modalContent}>

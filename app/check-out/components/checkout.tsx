@@ -11,8 +11,6 @@ import paymentMethodIcon from '../../assets/image.png';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import PaymentDialog, { PaymentData } from './PaymentDialog';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 
 interface City {
@@ -196,12 +194,7 @@ const Checkout = () => {
         fetchCities();
     }, [user]);
 
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     // Contact info change handler
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

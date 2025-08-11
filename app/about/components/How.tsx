@@ -2,17 +2,10 @@
 import Image from 'next/image';
 import styles from './How.module.css';
 import logo from '../../assets/logo1.png';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+
 
 const How = () => {
-    useEffect(() => {
-        AOS.init({});
-    }, []);
-    useEffect(() => {
-        AOS.refresh();
-    });
+
 
     return (
         <section className={styles.how}>
