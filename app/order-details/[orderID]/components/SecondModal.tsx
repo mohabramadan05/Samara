@@ -115,7 +115,7 @@ const SecondModal: React.FC<Props> = ({ onClose }) => {
         }, 1000);
 
         return () => clearTimeout(timeout);
-    }, []);
+    }, [boxOpen]);
 
     return (
         <div className={styles.modalOverlay}>
