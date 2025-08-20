@@ -8,8 +8,9 @@ import deliveryImg from '@/app/assets/popups/del.png';
 import donateImg from '@/app/assets/popups/don.png';
 import discountImg from '@/app/assets/popups/50.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRobot, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
+import chatImg from '@/app/assets/logo.png';
 
 type Notice = {
     id: string;
@@ -122,7 +123,7 @@ export default function NotificationStack() {
 
             {completed && (
                 <Link href="/chat" className={styles.fab} aria-label="Open chat">
-                    <FontAwesomeIcon icon={faRobot} />
+                    <Image src={chatImg} alt="" width={0} height={0} className={styles.imagessss} />
                 </Link>
             )}
         </>

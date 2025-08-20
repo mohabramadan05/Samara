@@ -11,10 +11,15 @@ import Partners from './components/Partners';
 import NewsletterDialog from './shared_components/NewsletterDialog';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Image from 'next/image';
+import vege from './assets/vege.gif';
+
+
 
 
 export default function Home() {
   const [showNewsletter, setShowNewsletter] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowNewsletter(true), 5000);
@@ -25,8 +30,43 @@ export default function Home() {
     AOS.init({});
   }, []);
 
+  useEffect(() => {
+    const overlayTimer = setTimeout(() => setShowOverlay(false), 3000);
+    return () => clearTimeout(overlayTimer);
+  }, []);
+
   return (
     <>
+      {showOverlay && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: '#252525',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+          aria-busy
+          aria-live="polite"
+        >
+          <div
+            style={{
+              fontSize: '18px',
+              fontWeight: 600,
+              color: '#333'
+            }}
+          >
+            <Image src={vege} alt="loading" width={200} height={0} style={{
+              height: 'auto'
+            }} />
+          </div>
+        </div>
+      )}
       <Hero />
       <Categories />
       <BestSeller />
@@ -35,7 +75,7 @@ export default function Home() {
       <New />
       <Partners />
       <Reviews />
-      <NewsletterDialog isOpen={showNewsletter} onClose={() => setShowNewsletter(false)} />
+      <NewsletterDialog isOpen={showNewsletter && !showOverlay} onClose={() => setShowNewsletter(false)} />
     </>
   );
 }

@@ -77,6 +77,10 @@ const Checkout = () => {
     const [charityDiscount, setCharityDiscount] = useState<{ active: boolean; percentage: number }>({ active: false, percentage: 0 });
     const [showPaymentDialog, setShowPaymentDialog] = useState(false);
     const [paymentLoading, setPaymentLoading] = useState(false);
+    const [pointsLoading, setPointsLoading] = useState(false);
+    const [pointsDiscountActive, setPointsDiscountActive] = useState(false);
+    const [pointsDiscountAmount, setPointsDiscountAmount] = useState(0);
+    const [pointsStatus, setPointsStatus] = useState<{ message: string; isError: boolean } | null>(null);
     const [showAddressConfirmation, setShowAddressConfirmation] = useState(false);
 
     // Add derived state for out-of-service
@@ -93,8 +97,8 @@ const Checkout = () => {
         : 0;
     const donationAmount = donationActive ? 0.50 : 0;
 
-    // If both can apply, use sum:
-    const totalDiscount = discountAmount + charityDiscountAmount;
+    // If multiple discounts can apply, use sum:
+    const totalDiscount = discountAmount + charityDiscountAmount + (pointsDiscountActive ? pointsDiscountAmount : 0);
 
     // Validate orderSummary before calculation
     const validOrderSummary = orderSummary &&
@@ -257,6 +261,7 @@ const Checkout = () => {
             const myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append("X-GP-Version", "2021-03-22");
+
 
             const raw = JSON.stringify({
                 app_id: process.env.BOIPA_APP_ID,
@@ -584,6 +589,40 @@ const Checkout = () => {
         setCharityDiscount({ active: false, percentage: 0 });
     };
 
+    const handleApplyPointsDiscount = async () => {
+        if (!user) {
+            setPointsStatus({ message: 'Please log in to use points.', isError: true });
+            return;
+        }
+        try {
+            setPointsLoading(true);
+            setPointsStatus(null);
+            const response = await fetch(`/api/users/wallet?userId=${user.id}`);
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.error || 'Failed to fetch points');
+            }
+            const userPoints = data.points || 0;
+            if (userPoints > 300) {
+                if (pointsDiscountActive) {
+                    setPointsDiscountActive(false);
+                    setPointsDiscountAmount(0);
+                    setPointsStatus({ message: 'Points discount removed.', isError: false });
+                } else {
+                    setPointsDiscountActive(true);
+                    setPointsDiscountAmount(10);
+                    setPointsStatus({ message: '€10 discount applied using your points.', isError: false });
+                }
+            } else {
+                setPointsStatus({ message: 'You need more than 300 points to apply this discount.', isError: true });
+            }
+        } catch {
+            setPointsStatus({ message: 'Unable to check points at the moment. Please try again.', isError: true });
+        } finally {
+            setPointsLoading(false);
+        }
+    };
+
     return (
         <section className={styles.checkout}>
             <h2 data-aos="fade-down"><span>purchase</span> product</h2>
@@ -807,6 +846,14 @@ const Checkout = () => {
                                 </span>
                             </div>
                         )}
+                        {pointsDiscountActive && (
+                            <div className={styles.orderSummaryRow} style={{ color: '#2196F3' }}>
+                                Points Discount
+                                <span style={{ color: '#2196F3' }}>
+                                    -{pointsDiscountAmount.toFixed(2)} €
+                                </span>
+                            </div>
+                        )}
                         {donationActive && (
                             <div className={styles.orderSummaryRow} style={{ color: '#E92B2B' }}>
                                 Donation
@@ -845,7 +892,37 @@ const Checkout = () => {
                         <span>50 Cent</span>
                     </button>
                     <div className={styles.extraFields} data-aos="fade-up">
+                        <button className={`${styles.actionBtn} ${styles.pointsBtn}`}
+                            onClick={handleApplyPointsDiscount}
+                            disabled={pointsLoading}
+                        >
+                            {pointsLoading ? 'Checking…' : (pointsDiscountActive ? 'Remove Points Discount' : 'Buy With Points')} <span className={styles.pointsIcon}>
+                                <svg width="25" height="22" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6.42394 16C6.53394 15.51 6.33394 14.81 5.98394 14.46L3.55394 12.03C2.79394 11.27 2.49394 10.46 2.71394 9.76C2.94394 9.06 3.65394 8.58 4.71394 8.4L7.83394 7.88C8.28394 7.8 8.83394 7.4 9.04394 6.99L10.7639 3.54C11.2639 2.55 11.9439 2 12.6839 2C13.4239 2 14.1039 2.55 14.6039 3.54L16.3239 6.99C16.4539 7.25 16.7239 7.5 17.0139 7.67L6.24394 18.44C6.10394 18.58 5.86394 18.45 5.90394 18.25L6.42394 16Z" fill="white" />
+                                    <path d="M19.3844 14.4599C19.0244 14.8199 18.8244 15.5099 18.9444 15.9999L19.6344 19.0099C19.9244 20.2599 19.7444 21.1999 19.1244 21.6499C18.8744 21.8299 18.5744 21.9199 18.2244 21.9199C17.7144 21.9199 17.1144 21.7299 16.4544 21.3399L13.5244 19.5999C13.0644 19.3299 12.3044 19.3299 11.8444 19.5999L8.91437 21.3399C7.80437 21.9899 6.85437 22.0999 6.24437 21.6499C6.01437 21.4799 5.84437 21.2499 5.73438 20.9499L17.8944 8.7899C18.3544 8.3299 19.0044 8.1199 19.6344 8.2299L20.6444 8.3999C21.7044 8.5799 22.4144 9.0599 22.6444 9.7599C22.8644 10.4599 22.5644 11.2699 21.8044 12.0299L19.3844 14.4599Z" fill="white" />
+                                </svg>
+                            </span>
+                        </button>
+                        {pointsStatus && (
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                padding: '12px 16px',
+                                borderRadius: '8px',
+                                marginTop: '10px',
+                                backgroundColor: pointsStatus.isError ? '#ffeaea' : '#e8f5e8',
+                                border: `1px solid ${pointsStatus.isError ? '#f44336' : '#4CAF50'}`,
+                                color: pointsStatus.isError ? '#c62828' : '#2e7d2e',
+                                fontSize: '14px',
+                                fontWeight: 500,
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                            }}>
+                                <span style={{ flex: 1 }}>{pointsStatus.message}</span>
+                            </div>
+                        )}
                         <div className={`${styles.formGroup} ${styles.promocodeGroup}`} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+
                             <input
                                 type="text"
                                 id="promoCode"
@@ -854,14 +931,15 @@ const Checkout = () => {
                                 value={promoCode}
                                 onChange={e => setPromoCode(e.target.value)}
                                 className={styles.formInput}
-                                style={{ color: '#000', flex: 1 }}
+                                style={{ color: '#000', flex: 1, opacity: pointsDiscountActive ? 0.6 : 1 }}
+                                disabled={pointsDiscountActive}
                             />
                             <button
                                 type="button"
                                 className={styles.verifyButton}
                                 style={{ whiteSpace: 'nowrap' }}
                                 onClick={handleVerifyPromoCode}
-                                disabled={promoCodeLoading}
+                                disabled={promoCodeLoading || pointsDiscountActive}
                             >
                                 {promoCodeLoading ? 'Verifying...' : 'Verify'}
                             </button>

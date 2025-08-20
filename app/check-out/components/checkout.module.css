@@ -6,6 +6,7 @@
     justify-content: start;
     align-items: start;
     overflow-x: hidden;
+    overflow-y: clip;
 }
 
 .checkout h2 {
@@ -69,6 +70,38 @@
     color: white;
     margin-bottom: 10px;
     font-size: 1rem;
+}
+
+.usePointsButton{
+    width: 100%;
+    background-color: #CDA00D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 10px 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+.actionBtn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pointsBtn {
+    background: linear-gradient(to right, #9300E8, #280FB9);
+    color: white;
 }
 
 .required {

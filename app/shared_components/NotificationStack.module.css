@@ -6,6 +6,7 @@
     pointer-events: none;
 }
 
+
 .card {
     width: 280px;
     max-width: calc(100vw - 32px);
@@ -103,16 +104,22 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #F1B901, #CE9E00);
+    background: linear-gradient(180deg, #2c2c2c, #252525);
     color: #fff;
     text-decoration: none;
     font-weight: 800;
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
     z-index: 3000;
+}
+
+
+.imagessss {
+    width: 40px;
+    height: 40px;
 }

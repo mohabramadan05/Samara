@@ -72,10 +72,10 @@ const Hero = () => {
             id: 4,
             title: "Delivery Deal",
             description: "Enjoy FREE delivery on all orders over €50 – no hidden fees, just great deals",
-            buttonText: "Shop Now",
+            buttonText: "Read More",
             buttonIcon: faStarAndCrescent,
             theme: 'delivery',
-            buttonLink: '/category',
+            buttonLink: '/delivery-deal',
             image: deliveryImage.src
         },
         {

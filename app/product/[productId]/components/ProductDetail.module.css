@@ -20,6 +20,7 @@
     background-color: #252525;
 }
 
+
 /* Main content section with image and info */
 .mainContent {
     display: flex;
@@ -507,9 +508,6 @@
     font-weight: 600;
 }
 
-.evenRow {}
-
-.oddRow {}
 
 /* Recipe section */
 .recipeSection {
@@ -633,7 +631,7 @@
 
 
 .productImageContainer2 {
-    display: flex;
+    display: none;
     gap: 10px;
     width: 100%;
     overflow-x: scroll;
@@ -809,6 +807,10 @@
 
     .productImageGallery {
         display: none;
+    }
+
+    .productImageContainer2 {
+        display: flex;
     }
 }
 
