@@ -190,7 +190,7 @@ const ProfilePage = () => {
                                 <p data-aos="fade-up">Swipe. Earn. Repeat. Your points = money in the shopping bank! Earn points on every product and turn them into instant discount!</p>
                                 <Link data-aos="fade-up" href="/products" className={styles.contentDescriptionButton}>
                                     <p>Explore Products</p>
-                                    <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg width="23" height="24" viewBox="0 0 23 24" fill="none" xmlns="https://www.w3.org/2000/svg">
                                         <path d="M8.43171 12C8.43168 9.50828 9.41798 7.11784 11.1751 5.35112C12.9322 3.58439 15.3172 2.58503 17.8089 2.57143C16.123 1.50964 14.1834 0.919264 12.1919 0.861786C10.2004 0.804309 8.22986 1.28183 6.48561 2.24463C4.74136 3.20743 3.28714 4.62027 2.27443 6.33602C1.26171 8.05178 0.727539 10.0077 0.727539 12C0.727539 13.9923 1.26171 15.9482 2.27443 17.664C3.28714 19.3797 4.74136 20.7926 6.48561 21.7554C8.22986 22.7182 10.2004 23.1957 12.1919 23.1382C14.1834 23.0807 16.123 22.4904 17.8089 21.4286C15.3172 21.415 12.9322 20.4156 11.1751 18.6489C9.41798 16.8822 8.43168 14.4917 8.43171 12Z" fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
                                         <path d="M17.6203 6.92572L19.1803 10.0286H22.2832L19.9518 12.4286L20.6889 15.8571L17.6203 14.1429L14.6889 15.8571L15.306 12.4286L12.9746 10.0286H16.0775L17.6203 6.92572Z" fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
