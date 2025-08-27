@@ -16,13 +16,13 @@ const Hero = () => {
 
                     <div className={styles.buttons}>
                         <div className={styles.socialIcons}>
-                            <a href="https://google.com" target="_blank">
+                            <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
                                 <FontAwesomeIcon icon={faFacebookF} className={styles.icon} />
                             </a>
-                            <a href="https://google.com" target="_blank">
+                            <a href="https://twitter.com/yourpage" target="_blank" rel="noopener noreferrer">
                                 <FontAwesomeIcon icon={faTwitter} className={styles.icon} />
                             </a>
-                            <a href="https://google.com" target="_blank">
+                            <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer">
                                 <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
                             </a>
                         </div>
