@@ -72,7 +72,6 @@ const NewsletterDialog: React.FC<NewsletterDialogProps> = ({ isOpen, onClose }) 
 
             const requestData = {
                 email,
-                audienceId: user?.id || null,
                 firstName: user?.user_metadata?.full_name || null,
             };
 

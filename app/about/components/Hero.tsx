@@ -3,7 +3,7 @@ import styles from './Hero.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import modelImage from '../../assets/about-model-image.png';
 import Navbar from '../../shared_components/Navbar';
-import { faTwitter, faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { faTiktok, faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 const Hero = () => {
     return (
@@ -16,13 +16,13 @@ const Hero = () => {
 
                     <div className={styles.buttons}>
                         <div className={styles.socialIcons}>
-                            <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer">
+                            <a href="https://www.facebook.com/IrSamaraHub" target="_blank" rel="noopener noreferrer">
                                 <FontAwesomeIcon icon={faFacebookF} className={styles.icon} />
                             </a>
-                            <a href="https://twitter.com/yourpage" target="_blank" rel="noopener noreferrer">
-                                <FontAwesomeIcon icon={faTwitter} className={styles.icon} />
+                            <a href="https://www.tiktok.com/@irsamarahub" target="_blank" rel="noopener noreferrer">
+                                <FontAwesomeIcon icon={faTiktok} className={styles.icon} />
                             </a>
-                            <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer">
+                            <a href="https://instagram.com/irsamarahub" target="_blank" rel="noopener noreferrer">
                                 <FontAwesomeIcon icon={faInstagram} className={styles.icon} />
                             </a>
                         </div>
