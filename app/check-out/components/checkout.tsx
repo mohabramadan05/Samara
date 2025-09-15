@@ -333,13 +333,13 @@ const Checkout = () => {
                 throw new Error(payJson?.error || 'Payment authorization failed');
             }
 
-            // const paymentStatus = payJson?.status;
-            // if (paymentStatus === 'FAILED') {
-            //     throw new Error(payJson?.message || 'Payment failed');
-            // }
-            // if (paymentStatus !== 'PAID') {
-            //     throw new Error('Payment not completed yet');
-            // }
+            const paymentStatus = payJson?.status;
+            if (paymentStatus === 'FAILED') {
+                throw new Error(payJson?.message || 'Payment failed');
+            }
+            if (paymentStatus !== 'PAID') {
+                throw new Error('Payment not completed yet');
+            }
 
             // Prepare order data for database HELOL
             const orderData = {
