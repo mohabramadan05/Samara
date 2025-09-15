@@ -111,7 +111,7 @@ const MyWishlist: React.FC<MyWishlistProps> = ({ user }) => {
     if (loading) return <div className={styles.loading}><Image src={loadinga} alt="loading" width={100} height={100} /></div>;
 
     return (
-        <div data-aos="fade-up">
+        <div >
             <div className={styles.wishlistSearchRow}>
                 <input
                     type="text"
@@ -132,16 +132,16 @@ const MyWishlist: React.FC<MyWishlistProps> = ({ user }) => {
                 </select>
             </div>
             {filteredProducts.length === 0 ? (
-                <div data-aos="fade-in" className={styles.emptyState}>No wishlist items found.</div>
+                <div className={styles.emptyState}>No wishlist items found.</div>
             ) : (
                 <>
-                    <div data-aos="fade-up" className={styles.wishlistGrid}>
+                    <div className={styles.wishlistGrid}>
                         {paginatedProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                     {totalPages > 1 && (
-                        <div data-aos="fade-up" className={styles.pagination}>
+                        <div className={styles.pagination}>
                             <button
                                 className={styles.paginationArrow}
                                 onClick={() => setCurrentPage(p => Math.max(1, p - 1))}

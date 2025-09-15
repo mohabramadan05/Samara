@@ -243,7 +243,7 @@ const MyAddress: React.FC<MyAddressProps> = ({ user }) => {
         <div className={styles.profileInfo}>
 
             {addresses.length === 0 && !showForm ? (
-                <div data-aos="fade-up" className={styles.noAddresses}>
+                <div className={styles.noAddresses}>
                     <p>You haven&apos;t added any addresses yet.</p>
                     <button className={styles.addAddressButton} onClick={handleAddAddress}>
                         <FontAwesomeIcon icon={faPlus} /> Add New Address
@@ -253,9 +253,9 @@ const MyAddress: React.FC<MyAddressProps> = ({ user }) => {
                 <>
                     {!showForm && (
                         <>
-                            <div data-aos="fade-up" className={styles.addressList}>
+                            <div className={styles.addressList}>
                                 {addresses.map(address => (
-                                    <div key={address.id} className={styles.addressCard} data-aos="fade-up">
+                                    <div key={address.id} className={styles.addressCard} >
 
 
                                         <div className={styles.addressContent}>
@@ -291,14 +291,14 @@ const MyAddress: React.FC<MyAddressProps> = ({ user }) => {
                                 ))}
                             </div>
 
-                            <button className={styles.addAddressButton} onClick={handleAddAddress} data-aos="fade-up">
+                            <button className={styles.addAddressButton} onClick={handleAddAddress} >
                                 <FontAwesomeIcon icon={faPlus} /> Add New Address
                             </button>
                         </>
                     )}
 
                     {showForm && (
-                        <form className={styles.addressForm} onSubmit={handleFormSubmit} data-aos="fade-up">
+                        <form className={styles.addressForm} onSubmit={handleFormSubmit} >
                             <div className={styles.formField}>
                                 <label className={styles.formLabel}>Country</label>
                                 <input

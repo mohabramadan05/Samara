@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import styles from './checkout.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStarAndCrescent, faLocationDot, faTrashCan, faExclamationTriangle, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +31,7 @@ interface Address {
 
 
 const Checkout = () => {
-    const router = useRouter();
+
 
     // Contact info form state
     const [contactFormData, setContactFormData] = useState({
@@ -245,44 +244,40 @@ const Checkout = () => {
         return `REF-${timestamp}-${random}`.toUpperCase();
     };
 
-    async function getSHA512(input: string) {
-        const encoder = new TextEncoder();
-        const data = encoder.encode(input);
-        const hashBuffer = await window.crypto.subtle.digest("SHA-512", data);
-        return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
-    }
-    const getToken = async () => {
+
+    // create check out 
+    const createCheckOut = async () => {
         try {
-            const nonce = new Date().toISOString();
-            const appKeySecret = process.env.BOIPA_APP_KEY_SECRET;
-            const secretInput = nonce + appKeySecret;
-            const secret = await getSHA512(secretInput);
+            const formattedAmount = parseFloat(finalTotal.toFixed(2));
+            const uniqueReference = generateUniqueReference();
 
-            const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("X-GP-Version", "2021-03-22");
-
-
-            const raw = JSON.stringify({
-                app_id: process.env.BOIPA_APP_ID,
-                secret,
-                grant_type: "client_credentials",
-                nonce
+            const res = await fetch('/api/sumup/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: formattedAmount,
+                    currency: 'EUR',
+                    description: 'Website Order',
+                    checkout_reference: uniqueReference,
+                })
             });
 
-            const res = await fetch("https://apis.sandbox.boipagateway.com/ucp/accesstoken", {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow" as RequestRedirect
-            });
-            if (!res.ok) throw new Error("Failed to fetch");
-            const json = await res.json();
-            return json.token;
-        } catch (err) {
-            return (err as Error).message;
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err?.error || 'Failed to create SumUp checkout');
+            }
+
+            const data = await res.json();
+
+            // SumUp creates a hosted checkout. Prefer redirect URL if provided
+            const status = data?.status;
+            return { data, status: status, reference: uniqueReference, id: data.id };
+        } catch (e) {
+            throw e;
         }
-    };
+    }
+
+
 
     const handlePaymentSubmit = async (paymentData: PaymentData) => {
         setPaymentLoading(true);
@@ -309,79 +304,42 @@ const Checkout = () => {
                 throw new Error('Order total cannot exceed €999,999.99');
             }
 
-            // Debug logging
-            // console.log('Payment Debug Info:', {
-            //     orderSummary: orderSummary,
-            //     discountAmount: discountAmount,
-            //     charityDiscountAmount: charityDiscountAmount,
-            //     donationAmount: donationAmount,
-            //     finalTotal: finalTotal,
-            //     formattedAmount: formattedAmount,
-            //     amountString: formattedAmount.toString(),
-            //     amountValidation: {
-            //         isNumber: typeof formattedAmount === 'number',
-            //         isFinite: isFinite(formattedAmount),
-            //         isPositive: formattedAmount > 0,
-            //         hasValidRange: formattedAmount >= 0.01 && formattedAmount <= 999999.99
-            //     }
-            // });
 
-            // Generate unique reference for this transaction
-            const uniqueReference = generateUniqueReference();
-
-            // Get payment token
-            const token = await getToken();
-            if (typeof token === 'string' && token.includes('Error')) {
-                throw new Error(`Failed to get payment token: ${token}`);
+            // Create SumUp checkout via backend
+            const checkout = await createCheckOut();
+            if (checkout?.status !== 'PENDING') {
+                throw new Error('Checkout not created');
             }
 
-            // Process payment with real card data
-            const paymentResponse = await fetch("https://apis.sandbox.boipagateway.com/ucp/transactions", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                    "Accept": "application/json",
-                    "X-GP-Version": "2021-03-22"
-                },
+
+            // Submit card details to SumUp via secure backend
+            const payRes = await fetch(`/api/sumup/checkout/${checkout.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    account_name: "transaction_processing",
-                    channel: "CNP",
-                    capture_mode: "AUTO",
-                    type: "SALE",
-                    amount: formattedAmount.toString(),
-                    currency: "EUR",
-                    reference: uniqueReference,
-                    country: "IE",
-                    payment_method: {
-                        "name": paymentData.cardholderName,
-                        "entry_mode": "ECOM",
-                        "card": {
-                            "number": paymentData.cardNumber.replace(/\s/g, ''),
-                            "expiry_month": paymentData.expiryMonth,
-                            "expiry_year": paymentData.expiryYear,
-                            "cvv": paymentData.cvv,
-                            "cvv_indicator": "PRESENT",
-                            "avs_address": "",
-                            "avs_postal_code": "",
-                        }
+                    payment_type: 'card',
+                    card: {
+                        name: paymentData.cardholderName,
+                        number: paymentData.cardNumber.replace(/\s/g, ''),
+                        expiry_month: paymentData.expiryMonth,
+                        expiry_year: paymentData.expiryYear,
+                        cvv: paymentData.cvv,
                     }
                 })
             });
 
-            const paymentResult = await paymentResponse.text();
-
-            let paymentJson;
-            try {
-                paymentJson = JSON.parse(paymentResult);
-            } catch {
-                throw new Error('Invalid payment response format');
+            const payJson = await payRes.json().catch(() => ({}));
+            if (!payRes.ok) {
+                throw new Error(payJson?.error || 'Payment authorization failed');
             }
 
-            // Check if payment was successful
-            if (!paymentResponse.ok || paymentJson.status !== 'CAPTURED') {
-                throw new Error(`Payment failed: ${paymentJson.message || 'Unknown error'}`);
-            }
+            // const paymentStatus = payJson?.status;
+            // if (paymentStatus === 'FAILED') {
+            //     throw new Error(payJson?.message || 'Payment failed');
+            // }
+            // if (paymentStatus !== 'PAID') {
+            //     throw new Error('Payment not completed yet');
+            // }
 
             // Prepare order data for database
             const orderData = {
@@ -393,7 +351,7 @@ const Checkout = () => {
                 charityDiscount: charityDiscountAmount,
                 donation: donationAmount,
                 notes: notes,
-                transactionCode: paymentJson.id,
+                transactionCode: checkout?.data?.id || checkout?.reference,
                 finalTotal: finalTotal,
                 orderSummary: {
                     subtotal: orderSummary.subtotal,
@@ -404,7 +362,7 @@ const Checkout = () => {
                 },
             };
 
-            // Create order in your database
+            // Create order only when payment is PAID
             const orderResponse = await fetch('/api/orders/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -418,13 +376,23 @@ const Checkout = () => {
 
             const orderResult = await orderResponse.json();
 
-            // Close dialog and show success
+            // Deduct points when points discount used
+            if (pointsDiscountActive && user?.id) {
+                try {
+                    await fetch('/api/users/wallet', {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ userId: user.id, deduct: 300 })
+                    });
+                } catch {
+                    // Non-blocking: ignore deduction failure here
+                }
+            }
+
+            // Close dialog and go to order details
             setShowPaymentDialog(false);
             setPaymentLoading(false);
-
-            // Show success message with transaction details
-            alert(`Payment successful! Order placed with reference: ${orderResult.orderId}`);
-            router.push(`/order-details/${orderResult.orderId}`);
+            window.location.href = `/order-details/${orderResult.orderId}`;
 
         } catch (error) {
             setPaymentLoading(false);

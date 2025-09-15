@@ -37,9 +37,9 @@ const BonusWallet: React.FC<BonusWalletProps> = ({ user }) => {
     }, [user.id]);
 
     return (
-        <div data-aos="fade-up" className={styles.profileInfo}>
-            <div data-aos="fade-up" className={styles.bonusWalletContainer}>
-                <div data-aos="fade-up" className={styles.bonusWalletContent}>
+        <div  className={styles.profileInfo}>
+            <div  className={styles.bonusWalletContainer}>
+                <div  className={styles.bonusWalletContent}>
                     {loading ? (
                         <div className={styles.loadingPoints}></div>
                     ) : error ? (

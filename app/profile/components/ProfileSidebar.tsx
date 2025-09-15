@@ -42,7 +42,7 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ activeTab, setActiveTab
     ];
 
     return (
-        <div data-aos="fade-right" className={styles.sidebar}>
+        <div className={styles.sidebar}>
             <ul className={styles.menu}>
                 {menuItems.map((item) => (
                     <li

@@ -116,10 +116,10 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ user, userData }) => {
     };
 
     return (
-        <div data-aos="fade-left" className={styles.profileInfo}>
-            <div data-aos="fade-left" className={styles.profileCard}>
-                <div data-aos="fade-left" className={styles.profileImageSection}>
-                    <div data-aos="fade-left" className={styles.profileImageContainer}>
+        <div className={styles.profileInfo}>
+            <div className={styles.profileCard}>
+                <div className={styles.profileImageSection}>
+                    <div className={styles.profileImageContainer}>
                         {user?.user_metadata?.avatar_url ? (
                             <Image
                                 src={user.user_metadata.avatar_url}

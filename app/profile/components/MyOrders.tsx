@@ -203,7 +203,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({ user }) => {
         }
 
         return (
-            <div data-aos="fade-up" className={styles.pagination}>
+            <div className={styles.pagination}>
                 <button
                     className={styles.pageArrow}
                     onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
@@ -256,7 +256,7 @@ const MyOrders: React.FC<MyOrdersProps> = ({ user }) => {
     }
 
     return (
-        <div data-aos="fade-up" className={styles.ordersContainer}>
+        <div className={styles.ordersContainer}>
             {/* Filters Section */}
             <div className={styles.filtersSection}>
                 <div className={styles.filtersPanel}>
