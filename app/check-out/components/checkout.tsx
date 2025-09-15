@@ -341,7 +341,7 @@ const Checkout = () => {
             //     throw new Error('Payment not completed yet');
             // }
 
-            // Prepare order data for database
+            // Prepare order data for database HELOL
             const orderData = {
                 userId: user.id,
                 addressData: selectedAddress,
