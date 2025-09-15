@@ -11,14 +11,14 @@ type SumUpUpdatePayload = {
     };
 };
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
     try {
         const accessToken = process.env.SUMUP_ACCESS_TOKEN;
         if (!accessToken) {
             return NextResponse.json({ error: 'SumUp configuration missing on server' }, { status: 500 });
         }
 
-        const id = params.id;
+        const { id } = context.params;
         if (!id) {
             return NextResponse.json({ error: 'Missing checkout id' }, { status: 400 });
         }
