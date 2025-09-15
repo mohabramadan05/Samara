@@ -11,29 +11,35 @@ type SumUpUpdatePayload = {
     };
 };
 
-export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+export async function PUT(
+    req: NextRequest,
+    context: { params: Record<string, string> } // <- FIXED
+) {
     try {
         const accessToken = process.env.SUMUP_ACCESS_TOKEN;
         if (!accessToken) {
             return NextResponse.json({ error: 'SumUp configuration missing on server' }, { status: 500 });
         }
 
-        const { id } = context.params;
+        const id = context.params.id;
         if (!id) {
             return NextResponse.json({ error: 'Missing checkout id' }, { status: 400 });
         }
 
         const body = (await req.json()) as SumUpUpdatePayload;
 
-        const sumupRes = await fetch(`https://api.sumup.com/v0.1/checkouts/${encodeURIComponent(id)}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(body),
-        });
+        const sumupRes = await fetch(
+            `https://api.sumup.com/v0.1/checkouts/${encodeURIComponent(id)}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(body),
+            }
+        );
 
         const text = await sumupRes.text();
         let data: unknown;
@@ -53,5 +59,3 @@ export async function PUT(req: NextRequest, context: { params: { id: string } })
         return NextResponse.json({ error: 'Unexpected server error' }, { status: 500 });
     }
 }
-
-
