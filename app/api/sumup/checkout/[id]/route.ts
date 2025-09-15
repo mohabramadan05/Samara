@@ -13,7 +13,7 @@ type SumUpUpdatePayload = {
 
 export async function PUT(
     req: NextRequest,
-    context: { params: Record<string, string> } // <- FIXED
+    context: { params: Promise<{ id: string }> }
 ) {
     try {
         const accessToken = process.env.SUMUP_ACCESS_TOKEN;
@@ -21,7 +21,7 @@ export async function PUT(
             return NextResponse.json({ error: 'SumUp configuration missing on server' }, { status: 500 });
         }
 
-        const id = context.params.id;
+        const { id } = await context.params;
         if (!id) {
             return NextResponse.json({ error: 'Missing checkout id' }, { status: 400 });
         }
