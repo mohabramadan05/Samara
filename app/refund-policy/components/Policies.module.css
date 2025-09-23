@@ -52,6 +52,11 @@
     text-decoration: underline;
 }
 
+.policiesLink {
+    color: #FFD54A;
+    text-decoration: underline;
+}
+
 /* Responsive styles */
 @media (max-width: 1200px) {
     .policies {

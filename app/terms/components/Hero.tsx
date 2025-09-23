@@ -5,7 +5,7 @@ const Hero = () => {
     return (
         <section className={styles.hero}>
             <Navbar />
-            <h1>Points Deal</h1>
+            <h1>Terms and Conditions</h1>
              
         </section>
     );

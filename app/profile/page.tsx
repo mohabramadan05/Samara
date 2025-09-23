@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './profile.module.css';
 import { supabase } from '@/lib/supabase';
@@ -28,6 +28,7 @@ interface UserData {
 
 const ProfilePage = () => {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<User | null>(null);
     const [userData, setUserData] = useState<UserData | null>(null);
@@ -118,6 +119,14 @@ const ProfilePage = () => {
 
         fetchUserData();
     }, [router]);
+
+    // Auto-open Bonus Wallet tab when URL contains ?bonus=true
+    useEffect(() => {
+        const bonusFlag = searchParams?.get('bonus');
+        if (bonusFlag === 'true') {
+            setActiveTab('bonus-wallet');
+        }
+    }, [searchParams]);
 
     // Display appropriate component based on active tab
     const renderTabContent = () => {

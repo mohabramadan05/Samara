@@ -62,10 +62,10 @@ const Hero = () => {
             id: 3,
             title: "Gaza Donation",
             description: "Even small coins can carry big compassion. Donate 50 cents for Gaza today.",
-            buttonText: "",
+            buttonText: "Read More",
             buttonIcon: faStarAndCrescent,
             theme: 'donation',
-            buttonLink: '',
+            buttonLink: '/50-discount-deal',
             image: donationImage.src
         },
         {
@@ -152,7 +152,7 @@ const Hero = () => {
                         {currentSlideData.description}
                     </p>
                     <div className={styles.buttons}>
-                        {currentSlideData.theme !== 'donation' && (<Link
+                       <Link
                             href={currentSlideData.buttonLink}
                             className={styles.viewProducts}
                             style={{
@@ -162,7 +162,7 @@ const Hero = () => {
                         >
                             {currentSlideData.buttonText}
                             <FontAwesomeIcon icon={currentSlideData.buttonIcon} style={{ color: "#ffffff" }} />
-                        </Link>)}
+                        </Link>
                         {currentSlideData.theme === 'brand' && (
                             <Link
                                 href={currentSlideData.buttonLink}

@@ -104,8 +104,8 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
-    width: 60px;
-    height: 60px;
+    width: 62.5px;
+    height: 62.5px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -114,12 +114,38 @@
     color: #fff;
     text-decoration: none;
     font-weight: 800;
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 5px 24px rgba(0, 0, 0, 0.24);
     z-index: 3000;
+    /* border: 1px solid #ce9e00de; */
+    animation: fabShadowWave 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes fabShadowWave {
+    0% {
+        box-shadow:
+            0 5px 24px rgba(0, 0, 0, 0.24),
+            0 0 0 rgba(206, 158, 0, 0);
+    }
+
+    50% {
+        box-shadow:
+            0 6px 28px rgba(206, 158, 0, 0.35),
+            0 0 18px rgba(206, 158, 0, 0.5);
+    }
+
+    100% {
+        box-shadow:
+            0 5px 24px rgba(0, 0, 0, 0.24),
+            0 0 0 rgba(206, 158, 0, 0);
+    }
 }
 
 
 .imagessss {
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    position: absolute;
+    overflow: hidden;
+
 }

@@ -10,7 +10,7 @@ import discountImg from '@/app/assets/popups/50.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import Link from 'next/link';
-import chatImg from '@/app/assets/logo.png';
+import chatImg from '@/app/assets/about-model-image.png';
 
 type Notice = {
     id: string;
@@ -70,7 +70,7 @@ export default function NotificationStack() {
     useEffect(() => {
         if (completed) return; // stop cycling when completed/closed
         const showMs = 5000; // visible time
-        const gapMs = 600; // small gap between cards
+        const gapMs = 1000; // small gap between cards
         const timer = setTimeout(() => {
             setVisible(false);
             setTimeout(() => {

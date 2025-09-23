@@ -1,5 +1,6 @@
 'use client'
 import styles from './Policies.module.css';
+import Link from 'next/link';
 
 const Policies = () => {
 
@@ -49,10 +50,10 @@ const Policies = () => {
                 <li>Contact us via WhatsApp, email, or the support section on our website.</li>
                 <li>Provide your order number and clear images of the issue.</li>
                 <li>We will review and respond within 24 hours.</li>
-                <li>Email: support@samarahub.ie</li>
-                <li>WhatsApp: 0894-641-409</li>
+                <li><Link  href="mailto:support@samarashop.ie"><span className={styles.policiesLink}>support@samarashop.ie</span></Link></li>
+                <li><Link  href="https://wa.me/0894641409">WhatsApp: <span className={styles.policiesLink}>0894-641-409</span></Link></li>
             </ul>
-            <hr />
+            <hr/>
             <p>Thank you for choosing Samara. We’re proud to bring the taste of home to your doorstep – right here in Ireland 🇮🇪.</p>
         </section>
     );

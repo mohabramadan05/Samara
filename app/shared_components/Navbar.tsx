@@ -175,7 +175,7 @@ const Navbar = () => {
                         <div className={styles.leftLinks}>
                             <Link href="/our-policies">Our Policies</Link>
                             <Link href="/delivery-policies">Delivery Policies</Link>
-                            <Link href="/profile">Bonus Wallet</Link>
+                            <Link href="/profile?bonus=true">Bonus Wallet</Link>
                             <Link href="/50-discount-deal">50% discount deal</Link>
                             <Link href="/health">Health and wellbeing</Link>
                         </div>
@@ -299,7 +299,8 @@ const Navbar = () => {
                         </button>
                     )}
 
-                    <form onSubmit={handleSearch} className={`${styles.searchBar} ${isSearchOpen ? styles.active : ''}`}>
+                    {
+                    /* <form onSubmit={handleSearch} className={`${styles.searchBar} ${isSearchOpen ? styles.active : ''}`}>
                         <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
                         <input
                             type="text"
@@ -307,13 +308,23 @@ const Navbar = () => {
                             value={searchQuery}
                             onChange={handleSearchInputChange}
                         />
-                    </form>
+                    </form> */
+                    }
+
+					{
+						isMobile && (
+							<button className={styles.cartButton} onClick={toggleSearch} aria-label="Toggle search">
+								<FontAwesomeIcon icon={faSearch} />
+							</button>
+						)
+					}
 
                     <button className={styles.langButton}>
                         <Image src={lang} alt="English" width={20} height={20} />
                         ENG
                     </button>
 
+                    
                     {
                         !loading && isMobile && (
                             user ? (
@@ -402,8 +413,8 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Dedicated mobile search bar below the header */}
-            {isMobile && (
+			{/* Dedicated mobile search bar below the header */}
+			{isMobile && isSearchOpen && (
                 <form onSubmit={handleSearch} className={styles.mobileSearchBar}>
                     <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
                     <input
@@ -413,7 +424,7 @@ const Navbar = () => {
                         onChange={handleSearchInputChange}
                     />
                 </form>
-            )}
+			)}
         </nav>
     );
 };
