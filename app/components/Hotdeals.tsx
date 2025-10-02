@@ -117,11 +117,11 @@ const Hotdeals = () => {
     return (
         <section className={styles.hotdeals}>
             <div className={styles.hotdealsContent}>
-                <h1 className={styles.sectionTitle} data-aos="fade-right">
+                <h1 className={styles.sectionTitle} >
                     <FontAwesomeIcon icon={faStar} className={styles.starIcon} style={{ color: "#FFD700", fontSize: "1.2rem" }} />
                     <span>Hot</span> Deals
                 </h1>
-                <Link data-aos="fade-left" className={styles.viewAll} href="/category/hot-deals">View All <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} /></Link>
+                <Link className={styles.viewAll} href="/category/hot-deals">View All <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} /></Link>
             </div>
             <div className={styles.hotdealsProducts}>
                 {loading ? (

@@ -61,8 +61,8 @@ const Policies = () => {
 
     return (
         <section className={styles.policies}>
-            <h2 data-aos="fade-down">ِ<span>All</span> Reviews <span style={{ fontSize: '1rem', color: '#FFD54A' }}>({total} Reviews)</span></h2>
-            <div className={styles.reviewsGrid} data-aos="fade-up">
+            <h2><span>All</span> Reviews <span style={{ fontSize: '1rem', color: '#FFD54A' }}>({total} Reviews)</span></h2>
+            <div className={styles.reviewsGrid}  >
                 {loading ? (
                     <p style={{ color: '#fff' }}>Loading...</p>
                 ) : reviews.length === 0 ? (
@@ -76,7 +76,7 @@ const Policies = () => {
                         const rating = review.rating || 0;
                         const date = review.createdAt || review.created_at;
                         return (
-                            <div key={review.id || idx} className={styles.reviewCard} data-aos="zoom-in">
+                            <div key={review.id || idx} className={styles.reviewCard}  >
                                 <div className={styles.reviewHeader}>
                                     {image ? (
                                         <Image src={image} alt={name} className={styles.avatar} width={40} height={40} />
@@ -100,7 +100,7 @@ const Policies = () => {
                 )}
             </div>
             {totalPages > 1 && (
-                <div className={styles.pagination} data-aos="fade-up">
+                <div className={styles.pagination}  >
                     {[...Array(totalPages)].map((_, i) => (
                         <button
                             key={i}

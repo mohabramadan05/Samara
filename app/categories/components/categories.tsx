@@ -54,7 +54,7 @@ const Categories = () => {
     if (loading) {
         return (
             <section className={styles.categories}>
-                <h1 data-aos="fade-right">All <span>Categories</span></h1>
+                <h1  >All <span>Categories</span></h1>
                 <div className={styles.categoriesLoading}>
                     <Image
                         src={loadingGif}
@@ -71,7 +71,7 @@ const Categories = () => {
     if (error) {
         return (
             <section className={styles.categories}>
-                <h1 data-aos="fade-right">All <span>Categories</span></h1>
+                <h1 >All <span>Categories</span></h1>
                 <div className={styles.categoriesLoading}>
                     <FontAwesomeIcon
                         icon={faTriangleExclamation}
@@ -85,12 +85,12 @@ const Categories = () => {
 
     return (
         <section className={styles.categories}>
-            <h1 data-aos="fade-right">All <span>Categories</span></h1>
+            <h1  >All <span>Categories</span></h1>
 
             <div className={styles.categoriesGrid}>
                 {categories.map((category) => (
 
-                    <Link data-aos="fade-up" href={`/category/${category.id}`} key={category.id}
+                    <Link   href={`/category/${category.id}`} key={category.id}
                         className={styles.categoryItem}>
 
                         <div className={styles.imageWrapper}>

@@ -68,12 +68,12 @@ const ReviewForm = () => {
     return (
         <section className={styles.policies} >
             <form className={styles.form} onSubmit={handleSubmit} autoComplete="off">
-                <Image src={p} className={styles.pattern} alt="Humanity First" width={250} height={250} data-aos="zoom-in" />
-                <div className={styles.logo} data-aos="fade-down">
+                <Image src={p} className={styles.pattern} alt="Humanity First" width={250} height={250} />
+                <div className={styles.logo}  >
                     <h2><span>Add</span> Review</h2>
                 </div>
-                <div className={styles['form-row']} data-aos="fade-up">
-                    <div className={styles.starRating} data-aos="zoom-in">
+                <div className={styles['form-row']}  >
+                    <div className={styles.starRating} >
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
@@ -90,7 +90,7 @@ const ReviewForm = () => {
                         ))}
                     </div>
                 </div>
-                <div className={styles['form-row']} data-aos="fade-up">
+                <div className={styles['form-row']}  >
                     <textarea
                         name="commnet"
                         placeholder="Review"
@@ -98,9 +98,9 @@ const ReviewForm = () => {
                         value={form.commnet}
                         onChange={handleChange}
                         required
-                        data-aos="fade-up"
+
                     />
-                    <button type="submit" className={styles.button} disabled={loading} data-aos="fade-up">{loading ? 'Sending...' : 'Send'}</button>
+                    <button type="submit" className={styles.button} disabled={loading} >{loading ? 'Sending...' : 'Send'}</button>
                 </div>
                 {success && <p className={styles.success}>{success}</p>}
                 {error && <p className={styles.error}>{error}</p>}

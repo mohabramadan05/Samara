@@ -63,12 +63,12 @@ const Policies = () => {
 
     return (
         <section className={styles.policies}>
-            <h2 data-aos="fade-right">Frequently Asked Questions (FAQs)</h2>
+            <h2 >Frequently Asked Questions (FAQs)</h2>
             <div>
                 {faqs.map((item, idx) => {
                     const isOpen = openItems.has(idx);
                     return (
-                        <div key={idx} className={styles.faqItem} data-aos="fade-up">
+                        <div key={idx} className={styles.faqItem} >
                             <button
                                 className={styles.faqQuestion}
                                 onClick={() => toggle(idx)}

@@ -257,7 +257,7 @@ const Navbar = () => {
                                         <Link href="/reviews" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Reviews</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
                                         <Link href="/our-policies" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Our Policies</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
                                         <Link href="/delivery-policies" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Delivery Policies</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
-                                        <Link href="/profile" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Bonus Wallet</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
+                                        <Link href="/profile?bonus=true" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Bonus Wallet</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
                                         <Link href="/50-discount-deal" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>50% discount deal</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
                                         <Link href="/health" onClick={toggleMobileMenu} className={styles.sideMenuLink}><span>Health and wellbeing</span><FontAwesomeIcon icon={faChevronRight} className={styles.sideMenuArrow} /></Link>
                                     </div>

@@ -14,9 +14,9 @@ const Features = () => {
 
     return (
         <section className={styles.features}>
-            <div data-aos="fade-right" className={styles.decorLeft}></div>
-            <div data-aos="fade-up" className={styles.featuresGrid}>
-                <div data-aos="fade-right" className={styles.featureItem}>
+            <div  className={styles.decorLeft}></div>
+            <div  className={styles.featuresGrid}>
+                <div  className={styles.featureItem}>
                     <svg width="145" height="144" viewBox="0 0 145 144" fill="none" xmlns="https://www.w3.org/2000/svg">
                         <path opacity="0.4" d="M116.3 47.5199V78.42C116.3 96.9 105.74 104.82 89.8998 104.82H37.1597C34.4597 104.82 31.8797 104.58 29.4797 104.04C27.9797 103.8 26.5398 103.38 25.2198 102.9C16.2198 99.5401 10.7598 91.74 10.7598 78.42V47.5199C10.7598 29.0399 21.3197 21.1201 37.1597 21.1201H89.8998C103.34 21.1201 113 26.8201 115.58 39.8401C116 42.2401 116.3 44.6999 116.3 47.5199Z" fill="#DCA900" />
                         <path d="M134.3 65.5199V96.42C134.3 114.9 123.741 122.82 107.901 122.82H55.1605C50.7205 122.82 46.7005 122.22 43.2205 120.9C36.0805 118.26 31.2205 112.8 29.4805 104.04C31.8805 104.58 34.4605 104.82 37.1605 104.82H89.9005C105.741 104.82 116.3 96.9 116.3 78.42V47.5199C116.3 44.6999 116.061 42.1801 115.581 39.8401C126.981 42.2401 134.3 50.2799 134.3 65.5199Z" fill="#DCA900" />
@@ -28,7 +28,7 @@ const Features = () => {
                     <h3 className={styles.title}>Competitive Prices</h3>
                     <p className={styles.desc}>Distinctive price compared<br />to the market price</p>
                 </div>
-                <div data-aos="fade-up" className={styles.featureItem}>
+                <div  className={styles.featureItem}>
                     <svg width="145" height="144" viewBox="0 0 145 144" fill="none" xmlns="https://www.w3.org/2000/svg">
                         <path opacity="0.4" d="M132.5 84V102C132.5 111.96 124.46 120 114.5 120H108.5C108.5 113.4 103.1 108 96.5 108C89.9 108 84.5 113.4 84.5 120H60.5C60.5 113.4 55.1 108 48.5 108C41.9 108 36.5 113.4 36.5 120H30.5C20.54 120 12.5 111.96 12.5 102V84H78.5C85.1 84 90.5 78.6 90.5 72V30H101.54C105.86 30 109.82 32.3401 111.98 36.0601L122.24 54H114.5C111.2 54 108.5 56.7 108.5 60V78C108.5 81.3 111.2 84 114.5 84H132.5Z" fill="#DCA900" />
                         <path d="M48.5 132C55.1274 132 60.5 126.627 60.5 120C60.5 113.373 55.1274 108 48.5 108C41.8726 108 36.5 113.373 36.5 120C36.5 126.627 41.8726 132 48.5 132Z" fill="#DCA900" />
@@ -42,7 +42,7 @@ const Features = () => {
                     <h3 className={styles.title}>Fast Delivery</h3>
                     <p className={styles.desc}>Delivery to any region in<br />Ireland</p>
                 </div>
-                <div data-aos="fade-left" className={styles.featureItem}>
+                <div  className={styles.featureItem}>
                     <svg width="145" height="144" viewBox="0 0 145 144" fill="none" xmlns="https://www.w3.org/2000/svg">
                         <path opacity="0.4" d="M97.64 12H47.36C25.52 12 12.5 25.02 12.5 46.86V97.08C12.5 118.98 25.52 132 47.36 132H97.58C119.42 132 132.44 118.98 132.44 97.14V46.86C132.5 25.02 119.48 12 97.64 12Z" fill="#DCA900" />
                         <path d="M53.4196 58.5C48.3196 58.5 43.2196 56.58 39.3196 52.68C37.5796 50.94 37.5796 48.06 39.3196 46.32C41.0596 44.58 43.9397 44.58 45.6796 46.32C49.9396 50.58 56.8996 50.58 61.1596 46.32C62.8996 44.58 65.7796 44.58 67.5196 46.32C69.2596 48.06 69.2596 50.94 67.5196 52.68C63.6196 56.52 58.5196 58.5 53.4196 58.5Z" fill="#DCA900" />

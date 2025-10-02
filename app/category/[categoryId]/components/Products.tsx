@@ -249,8 +249,8 @@ const Products = ({ categoryId, initialCategory }: ProductsProps) => {
 
     return (
         <div className={styles.productsSection}>
-            <div data-aos="fade-right" className={styles.productsHeader}>
-                <h2 data-aos="fade-right" className={styles.productsTitle}>
+            <div   className={styles.productsHeader}>
+                <h2   className={styles.productsTitle}>
                     All <span className={styles.categoryName}>Products</span> <span className={styles.productCount}>({totalProducts} Products)</span>
                 </h2>
             </div>
@@ -288,7 +288,7 @@ const Products = ({ categoryId, initialCategory }: ProductsProps) => {
                     )}
                 </div>
 
-                <div data-aos="fade-left" className={styles.filterSection}>
+                <div   className={styles.filterSection}>
                     <div className={styles.filterCard}>
                         <h3 className={styles.filterTitle}>Filter</h3>
 

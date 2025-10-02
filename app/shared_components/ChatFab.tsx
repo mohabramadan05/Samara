@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './ChatFab.module.css';
 import chatImg from '@/app/assets/about-model-image.png';
 
@@ -13,22 +14,44 @@ type ChatFabProps = {
 
 export default function ChatFab({ href = '/chat', ariaLabel = 'Open chat' }: ChatFabProps) {
     const [showMessage, setShowMessage] = useState(false);
+    const pathname = usePathname();
+
+    // ✅ Define main routes where the chat should appear (including all their subroutes)
+    const allowedMainPaths = ['/samara', '/samara/admin', '/samara/dashboard', '/chat'];
+
+    // ✅ Check if current path starts with any of the allowed main paths
+    const isAllowed = allowedMainPaths.some(path =>
+        path === '/' ? pathname === '/' : pathname.startsWith(path)
+    );
 
     useEffect(() => {
-        // Show message after 2 minutes (120000 ms)
-        const timer = setTimeout(() => {
-            setShowMessage(true);
-        }, 30000);
+        if (isAllowed) {
+            const timer = setTimeout(() => {
+                setShowMessage(true);
+            }, 120000); // 2 minutes
+            return () => clearTimeout(timer);
+        }
+    }, [isAllowed]);
 
-        return () => clearTimeout(timer);
-    }, []);
-
+    if (isAllowed) {
+        return null; // don't render outside allowed routes
+    }
     return (
         <div className={styles.wrapper}>
             {/* Only show message after delay */}
             {showMessage && (
                 <div className={styles.message}>
-                    Hello, I&apos;m Samara 👋<br />How can I help you?
+                    <button
+                        className={styles.closeBtn}
+                        onClick={() => setShowMessage(false)}
+                        aria-label="Close message"
+
+                    >
+                        ×
+                    </button>
+                    <p className={styles.messageText}>
+                        Hello, I&apos;m Samara 👋<br />How can I help you?
+                    </p>
                 </div>
             )}
 

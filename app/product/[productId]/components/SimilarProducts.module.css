@@ -9,6 +9,12 @@
     color: #FFD54A;
 }
 
+.similarProductsList {
+    display: flex;
+    gap: 10px;
+    overflow: scroll;
+}
+
 .similarProductsContainer {
     display: flex;
     justify-content: space-between;

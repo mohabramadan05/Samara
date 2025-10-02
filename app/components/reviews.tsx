@@ -68,11 +68,11 @@ export default function Reviews() {
             <Image src={p} className={styles.pattern1} alt="reviews" width={100} height={100} />
             <Image src={p} className={styles.pattern2} alt="reviews" width={100} height={100} />
             <div className={styles.hotdealsContent}>
-                <h1 className={styles.sectionTitle} data-aos="fade-right">
+                <h1 className={styles.sectionTitle} >
                     <FontAwesomeIcon icon={faStar} className={styles.starIcon} style={{ color: "#FFD700", fontSize: "1.2rem" }} />
                     <span>Customers</span> Reviewes
                 </h1>
-                <Link data-aos="fade-left" className={styles.viewAll} href="/reviews">View All <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} /></Link>
+                <Link  className={styles.viewAll} href="/reviews">View All <FontAwesomeIcon className={styles.arrowIcon} icon={faArrowRight} /></Link>
             </div>
             <div className={styles.reviewsContainer}>
                 {loading ? (
@@ -88,7 +88,7 @@ export default function Reviews() {
                         const rating = review.rating || 0;
                         const date = review.createdAt || review.created_at;
                         return (
-                            <div data-aos="fade-up" key={review.id} className={styles.reviewCard}>
+                            <div  key={review.id} className={styles.reviewCard}>
                                 <div className={styles.reviewHeader}>
                                     {image ? (
                                         <Image src={image} alt={name} className={styles.avatar} width={40} height={40} />
@@ -112,7 +112,7 @@ export default function Reviews() {
                     })
                 )}
             </div>
-            <Link data-aos="fade-up" className={styles.addReview} href="/reviews">
+            <Link  className={styles.addReview} href="/reviews">
                 Add Review
             </Link>
         </section>

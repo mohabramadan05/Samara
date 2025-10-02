@@ -596,10 +596,10 @@ const Checkout = () => {
 
     return (
         <section className={styles.checkout}>
-            <h2 data-aos="fade-down"><span>purchase</span> product</h2>
+            <h2><span>purchase</span> product</h2>
             <div className={styles.checkoutDivider}>
-                <div className={styles.checkoutDividerLeft} data-aos="fade-right">
-                    <div className={styles.contactInfo} data-aos="fade-up">
+                <div className={styles.checkoutDividerLeft} >
+                    <div className={styles.contactInfo} >
                         <h3>
                             <span>Contact</span> Information
                         </h3>
@@ -662,7 +662,7 @@ const Checkout = () => {
                             </div>
                         </div>
                     </div>
-                    <div className={styles.addressInfo} data-aos="fade-up">
+                    <div className={styles.addressInfo} >
                         <h3>
                             <span>Select</span> Address
                         </h3>
@@ -770,7 +770,7 @@ const Checkout = () => {
                             )}
                         </div>
                     </div>
-                    <div className={styles.paymentDetails} data-aos="fade-up">
+                    <div className={styles.paymentDetails} >
                         <h3>
                             <span>Payment</span> Details
                         </h3>
@@ -786,8 +786,8 @@ const Checkout = () => {
 
                     </div>
                 </div>
-                <div className={styles.checkoutDividerRight} data-aos="fade-left">
-                    <div className={styles.orderSummary} data-aos="fade-up">
+                <div className={styles.checkoutDividerRight} >
+                    <div className={styles.orderSummary} >
                         <h3><span style={{ color: '#CDA00D' }}>Order</span> Summary</h3>
                         <div className={styles.orderSummaryRow}>Total Items <span style={{ color: '#CDA00D' }}>
                             {orderSummary.items}
@@ -840,7 +840,7 @@ const Checkout = () => {
 
 
 
-                        <div className={styles.extraFields} data-aos="fade-up">
+                        <div className={styles.extraFields} >
                             <button
                                 className={styles.donateButton}
                                 onClick={handleDonationToggle}
@@ -849,7 +849,7 @@ const Checkout = () => {
                                     transform: donationActive ? 'scale(1.02)' : 'scale(1)',
                                     transition: 'all 0.2s ease'
                                 }}
-                                data-aos="zoom-in"
+
                             >
                                 <span>{donationActive ? 'Remove Donation' : 'Donate To Gaza'}</span>
                                 <span>50 Cent</span>

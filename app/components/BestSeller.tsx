@@ -116,13 +116,13 @@ const BestSeller = () => {
 
     return (
         <section className={styles.bestSeller} >
-            <h1 className={styles.sectionTitle} data-aos="fade-right">
+            <h1 className={styles.sectionTitle} >
                 <FontAwesomeIcon icon={faStar} className={styles.starIcon} style={{ color: "#FFD700", fontSize: "1.2rem" }} />
                 <span className={styles.best}>Best</span> Seller
             </h1>
 
             <div className={styles.productSlider}>
-                <button className={styles.sliderButton} data-aos="fade-right" aria-label="Previous">
+                <button className={styles.sliderButton}  aria-label="Previous">
                     <FontAwesomeIcon icon={faChevronLeft} className={styles.sliderIcon} />
                 </button>
 
@@ -144,13 +144,12 @@ const BestSeller = () => {
                                 key={product.id}
                                 product={product}
                                 onAddToCart={handleAddToCartSync}
-                                data-aos="fade-up"
                             />
                         ))}
                     </div>
                 )}
 
-                <button className={styles.sliderButton} data-aos="fade-left" aria-label="Next">
+                <button className={styles.sliderButton}  aria-label="Next">
                     <FontAwesomeIcon icon={faChevronRight} className={styles.sliderIcon} />
                 </button>
             </div>

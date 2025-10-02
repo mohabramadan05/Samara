@@ -20,17 +20,17 @@ const HumanityFirst = () => {
 
     return (
         <section className={styles.humanityFirst}>
-            <h2 data-aos="fade-right"><span>Humanity</span> First</h2>
-            <Image data-aos="fade-left" className={styles.donate} src={donate} alt="Humanity First" width={200} height={200} />
-            <p data-aos="fade-up">
+            <h2 ><span>Humanity</span> First</h2>
+            <Image className={styles.donate} src={donate} alt="Humanity First" width={200} height={200} />
+            <p>
                 Samara Company believes in its humanitarian mission and its effective role in society, and is committed to providing assistance to every individual in society, especially those suffering from difficult economic circumstances. It has agreed with Places of worship such as mosques, churches, etc. to launch a community cooperation initiative aimed at supporting needy families and alleviating their burdens in light of the challenges they face daily.
             </p>
-            <p data-aos="fade-up">
+            <p>
                 This protocol is not limited to merely offering a discount; rather, it represents a noble humanitarian message that Samara Company embodies through its deep commitment to standing by those in need of support, based on its belief in the importance of solidarity and social cohesion.
             </p>
-            <h3 data-aos="fade-up">Get a Free Copy:</h3>
-            <div data-aos="fade-up" className={styles.contanier}>
-                <div data-aos="fade-right" className={styles.types}>
+            <h3>Get a Free Copy:</h3>
+            <div className={styles.contanier}>
+                <div className={styles.types}>
                     <Image className={styles.Masjid} src={Masjid} alt="Masjid" width={150} height={150} />
                     <h4>Masjid Copy</h4>
                     <button
@@ -40,7 +40,7 @@ const HumanityFirst = () => {
                         Download
                     </button>
                 </div>
-                <div data-aos="fade-left" className={styles.types}>
+                <div className={styles.types}>
                     <Image className={styles.Church} src={Church} alt="Church" width={150} height={150} />
                     <h4>Church Copy</h4>
                     <button

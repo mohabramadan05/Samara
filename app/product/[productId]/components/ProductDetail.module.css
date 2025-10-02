@@ -7,7 +7,7 @@
     margin: 0;
     padding: 75px 150px;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .loading {

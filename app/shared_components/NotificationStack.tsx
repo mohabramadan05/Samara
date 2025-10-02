@@ -9,6 +9,8 @@ import donateImg from '@/app/assets/popups/don.png';
 import discountImg from '@/app/assets/popups/50.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { usePathname } from 'next/navigation';
+
 // ChatFab decoupled; rendered globally
 
 type Notice = {
@@ -19,20 +21,21 @@ type Notice = {
     image: StaticImageData;
 };
 
+
 const notices: Notice[] = [
     {
         id: 'points',
         title: 'Congratulations',
         body:
             'Swipe. Earn. Repeat. Your points = money in the shopping bank! Earn points on every product and turn them into instant discount!',
-        cta: { label: 'Explore Products', href: '/category' },
+        cta: { label: 'Learn More', href: '/points-deal' },
         image: pointsImg,
     },
     {
         id: 'delivery',
         title: 'Delivery Deal',
         body: 'Enjoy FREE delivery on all orders over €50 - no hidden fees, just great deals',
-        cta: { label: 'Explore Products', href: '/delivery-deal' },
+        cta: { label: 'Read More', href: '/delivery-deal' },
         image: deliveryImg,
     },
     {
@@ -59,6 +62,16 @@ export default function NotificationStack() {
 
     const delayMs = 60_000; // 1 minute
     const current = useMemo(() => notices[index % notices.length], [index]);
+
+    const pathname = usePathname();
+
+    // ✅ Define main routes where the chat should appear (including all their subroutes)
+    const allowedMainPaths = ['/samara', '/samara/admin', '/samara/dashboard', '/chat'];
+
+    // ✅ Check if current path starts with any of the allowed main paths
+    const isAllowed = allowedMainPaths.some(path =>
+        path === '/' ? pathname === '/' : pathname.startsWith(path)
+    );
 
     // Initialize: if not completed this session, show first notice after 1 minute
     useEffect(() => {
@@ -98,6 +111,10 @@ export default function NotificationStack() {
             }
         }
     };
+
+    if (isAllowed) {
+        return null; // don't render outside allowed routes
+    }
 
     return (
         <>

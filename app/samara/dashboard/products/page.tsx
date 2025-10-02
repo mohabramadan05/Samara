@@ -1091,7 +1091,7 @@ export default function ProductsPage() {
                                             <td className={styles.descCell}>{product.desc}</td>
                                             <td>
                                                 {product.image && (
-                                                    <Image src={product.image} alt={product.name} className={styles.productImage} />
+                                                    <Image src={product.image} alt={product.name} width={50} height={50} className={styles.productImage} />
                                                 )}
                                             </td>
                                             <td>
@@ -1157,7 +1157,7 @@ export default function ProductsPage() {
                                                                     <div className={styles.imageGrid}>
                                                                         {images[product.id].map(img => (
                                                                             <div key={img.id} className={styles.imageContainer}>
-                                                                                <Image src={img.image} alt="Product" className={styles.productImage} />
+                                                                                <Image src={img.image} alt="Product" width={150} height={150} className={styles.productImage} />
                                                                                 <button
                                                                                     className={styles.deleteButton}
                                                                                     onClick={() => handleDeleteImage(img.id)}
