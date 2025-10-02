@@ -17,16 +17,30 @@ export default function BackToTop() {
             }
         };
 
-        // Listen for scroll events
-        window.addEventListener('scroll', toggleVisibility);
+        // Listen for scroll events with throttling for better performance
+        let ticking = false;
+        const handleScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    toggleVisibility();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
 
         // Cleanup
         return () => {
-            window.removeEventListener('scroll', toggleVisibility);
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
 
-    const scrollToTop = () => {
+    const scrollToTop = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('BackToTop button clicked'); // Debug log
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -39,6 +53,7 @@ export default function BackToTop() {
             onClick={scrollToTop}
             aria-label="Back to top"
             title="Back to top"
+            type="button"
         >
             <FontAwesomeIcon icon={faChevronUp} className={styles.icon} />
         </button>
