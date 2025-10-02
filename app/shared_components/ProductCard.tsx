@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import styles from './ProductCard.module.css';
 import Link from 'next/link';
@@ -106,10 +106,10 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
                             <p className={styles.productName}>{product.name}</p>
                             <div className={styles.categoryContainer}>
                                 <p className={styles.productCategory}>{product.categoryName}</p>
-                                <div className={styles.productRate}>
+                                {/* <div className={styles.productRate}>
                                     <FontAwesomeIcon icon={faStar} />
                                     &nbsp;&nbsp;<span className={styles.productRateNumber}>245</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         <div className={styles.concave_box}></div>
