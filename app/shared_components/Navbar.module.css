@@ -260,11 +260,16 @@
     justify-content: center;
     gap: 10px;
     min-width: 100px;
-    margin: 10px
+    margin: 10px;
 }
 
 
 .loginButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.loginButton2:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
 }
@@ -467,10 +472,16 @@
         padding-top: 32px;
         padding-bottom: 0;
         overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        opacity: 0;
+        visibility: hidden;
     }
 
     .sideMenu.active {
         transform: translateX(0);
+        opacity: 1;
+        visibility: visible;
     }
 
     .menuOverlay {
@@ -481,10 +492,19 @@
         height: 100vh;
         background: #1a1a1ae6;
         z-index: 1999;
-        opacity: 1;
-        transition: opacity 0.3s;
+        opacity: 0;
+        transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         backdrop-filter: blur(2px);
+        pointer-events: none;
+        visibility: hidden;
     }
+
+    .menuOverlay.active {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+    }
+
 
     .mainLinks {
         display: none !important;
@@ -515,6 +535,11 @@
         margin: 0 auto;
         max-width: 120px;
         height: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .sideMenuLogo:hover {
+        transform: scale(1.05);
     }
 
     .sideMenuSection {
@@ -522,6 +547,14 @@
         flex-direction: column;
         gap: 12px;
         margin-bottom: 24px;
+    }
+
+    .collapseButton {
+        transition: all 0.3s ease;
+    }
+
+    .collapseButton:hover {
+        color: #FFD700;
     }
 
     .infosection {
@@ -540,7 +573,7 @@
         font-weight: 600;
         text-decoration: none;
         padding: 0 0 0 0;
-        transition: color 0.2s;
+        transition: color 0.2s ease;
         border: none;
         background: none;
         cursor: pointer;

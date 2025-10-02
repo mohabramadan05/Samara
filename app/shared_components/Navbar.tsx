@@ -202,9 +202,9 @@ const Navbar = () => {
                 </div>
 
                 {/* Side Drawer and Overlay for Mobile */}
-                {isMobile && isMobileMenuOpen && (
+                {isMobile && (
                     <>
-                        <div className={styles.menuOverlay} onClick={toggleMobileMenu} />
+                        <div className={`${styles.menuOverlay} ${isMobileMenuOpen ? styles.active : ''}`} onClick={toggleMobileMenu} />
                         <nav
                             className={
                                 `${styles.sideMenu} ${isMobileMenuOpen ? styles.active : ''}`
@@ -300,31 +300,31 @@ const Navbar = () => {
                     )}
 
                     {
-                    /* <form onSubmit={handleSearch} className={`${styles.searchBar} ${isSearchOpen ? styles.active : ''}`}>
-                        <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            value={searchQuery}
-                            onChange={handleSearchInputChange}
-                        />
-                    </form> */
+                        /* <form onSubmit={handleSearch} className={`${styles.searchBar} ${isSearchOpen ? styles.active : ''}`}>
+                            <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                value={searchQuery}
+                                onChange={handleSearchInputChange}
+                            />
+                        </form> */
                     }
 
-					{
-						isMobile && (
-							<button className={styles.cartButton} onClick={toggleSearch} aria-label="Toggle search">
-								<FontAwesomeIcon icon={faSearch} />
-							</button>
-						)
-					}
+                    {
+                        isMobile && (
+                            <button className={styles.cartButton} onClick={toggleSearch} aria-label="Toggle search">
+                                <FontAwesomeIcon icon={faSearch} />
+                            </button>
+                        )
+                    }
 
                     <button className={styles.langButton}>
                         <Image src={lang} alt="English" width={20} height={20} />
                         ENG
                     </button>
 
-                    
+
                     {
                         !loading && isMobile && (
                             user ? (
@@ -413,8 +413,8 @@ const Navbar = () => {
                 </div>
             </div>
 
-			{/* Dedicated mobile search bar below the header */}
-			{isMobile && isSearchOpen && (
+            {/* Dedicated mobile search bar below the header */}
+            {isMobile && isSearchOpen && (
                 <form onSubmit={handleSearch} className={styles.mobileSearchBar}>
                     <FontAwesomeIcon icon={faSearch} className={styles.searchIcon} />
                     <input
@@ -424,7 +424,7 @@ const Navbar = () => {
                         onChange={handleSearchInputChange}
                     />
                 </form>
-			)}
+            )}
         </nav>
     );
 };

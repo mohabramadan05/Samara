@@ -9,6 +9,7 @@ import New from './components/New';
 import Reviews from './components/reviews';
 import Partners from './components/Partners';
 import NewsletterDialog from './shared_components/NewsletterDialog';
+import BackToTop from './shared_components/BackToTop';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Image from 'next/image';
@@ -76,6 +77,7 @@ export default function Home() {
       <Partners />
       <Reviews />
       <NewsletterDialog isOpen={showNewsletter && !showOverlay} onClose={() => setShowNewsletter(false)} />
+      <BackToTop />
     </>
   );
 }

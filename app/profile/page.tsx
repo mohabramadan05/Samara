@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './profile.module.css';
@@ -26,7 +26,7 @@ interface UserData {
     image?: string;
 }
 
-const ProfilePage = () => {
+const ProfileContent = () => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [loading, setLoading] = useState(true);
@@ -149,8 +149,8 @@ const ProfilePage = () => {
     };
 
     return (
-        <main className={styles.profilePage}>
-            <Navbar />
+            <main className={styles.profilePage}>
+                <Navbar />
 
             <div className={styles.profileHeader}>
                 <h1>Profile</h1>
@@ -212,7 +212,15 @@ const ProfilePage = () => {
 
 
             </div>
-        </main>
+            </main>
+    );
+};
+
+const ProfilePage = () => {
+    return (
+        <Suspense fallback={null}>
+            <ProfileContent />
+        </Suspense>
     );
 };
 

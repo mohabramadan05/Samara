@@ -72,7 +72,7 @@
     font-size: 1rem;
 }
 
-.usePointsButton{
+.usePointsButton {
     width: 100%;
     background-color: #CDA00D;
     color: white;
@@ -349,7 +349,7 @@
 
 .formInput {
     padding: 12px 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid #F1B901;
     border-radius: 10px;
     font-size: 16px;
     background-color: rgba(255, 255, 255, 0.05);
@@ -503,8 +503,8 @@
 }
 
 .donateButton {
-    width: 90%;
-    background: linear-gradient(to bottom, #00000080, #00000080), url('../../assets/donatation.png');
+    width: 100%;
+    background: linear-gradient(to bottom, #00000060, #00000060), url('../../assets/donatation.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -517,7 +517,7 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-    box-shadow: -20px 0px 20px 10px #e92b2b72, 20px 0px 20px 9px #4CAF509c;
+    /* box-shadow: -20px 0px 20px 10px #e92b2b72, 20px 0px 20px 9px #4CAF509c; */
 }
 
 .donateButton span {
@@ -527,7 +527,7 @@
 }
 
 .extraFields {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;

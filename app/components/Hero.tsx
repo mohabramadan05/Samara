@@ -82,10 +82,10 @@ const Hero = () => {
             id: 5,
             title: "Points Deal",
             description: "Swipe. Earn. Repeat. Your points = money in the shopping bank! Earn points on every product and turn them into instant discount!",
-            buttonText: "Explore Products",
+            buttonText: "Learn More",
             buttonIcon: faStarAndCrescent,
             theme: 'points',
-            buttonLink: '/category',
+            buttonLink: '/points-deal',
             image: pointsImage.src
         }
     ];
@@ -165,7 +165,7 @@ const Hero = () => {
                         </Link>
                         {currentSlideData.theme === 'brand' && (
                             <Link
-                                href={currentSlideData.buttonLink}
+                                href="/about"
                                 className={styles.learnMore}
                             >
                                 Learn More

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './NotificationStack.module.css';
 import Image, { StaticImageData } from 'next/image';
 import pointsImg from '@/app/assets/popups/box.png';
@@ -9,8 +9,7 @@ import donateImg from '@/app/assets/popups/don.png';
 import discountImg from '@/app/assets/popups/50.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import Link from 'next/link';
-import chatImg from '@/app/assets/about-model-image.png';
+// ChatFab decoupled; rendered globally
 
 type Notice = {
     id: string;
@@ -54,39 +53,51 @@ const notices: Notice[] = [
 
 export default function NotificationStack() {
     const [index, setIndex] = useState(0);
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const timerRef = useRef<number | null>(null);
 
+    const delayMs = 60_000; // 1 minute
     const current = useMemo(() => notices[index % notices.length], [index]);
 
-    // Initialize from sessionStorage so we only show sequence once per session
+    // Initialize: if not completed this session, show first notice after 1 minute
     useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const done = sessionStorage.getItem('samara:noticesComplete') === '1';
-            if (done) setCompleted(true);
+        if (typeof window === 'undefined') return;
+        const done = sessionStorage.getItem('samara:noticesComplete') === '1';
+        if (done) {
+            setCompleted(true);
+            return;
         }
+        timerRef.current = window.setTimeout(() => {
+            setVisible(true);
+        }, delayMs);
+        return () => {
+            if (timerRef.current) window.clearTimeout(timerRef.current);
+        };
     }, []);
 
+    // Clear any pending timers when sequence completes
     useEffect(() => {
-        if (completed) return; // stop cycling when completed/closed
-        const showMs = 5000; // visible time
-        const gapMs = 1000; // small gap between cards
-        const timer = setTimeout(() => {
-            setVisible(false);
-            setTimeout(() => {
-                if (index < notices.length - 1) {
-                    setIndex((i) => i + 1);
-                    setVisible(true);
-                } else {
-                    setCompleted(true);
-                    if (typeof window !== 'undefined') {
-                        sessionStorage.setItem('samara:noticesComplete', '1');
-                    }
-                }
-            }, gapMs);
-        }, showMs);
-        return () => clearTimeout(timer);
-    }, [index, completed]);
+        if (!completed) return;
+        if (timerRef.current) window.clearTimeout(timerRef.current);
+    }, [completed]);
+
+    const handleClose = () => {
+        setVisible(false);
+        if (timerRef.current) window.clearTimeout(timerRef.current);
+        if (index < notices.length - 1) {
+            // After user closes, wait 1 minute then show next card
+            timerRef.current = window.setTimeout(() => {
+                setIndex((i) => i + 1);
+                setVisible(true);
+            }, delayMs);
+        } else {
+            setCompleted(true);
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('samara:noticesComplete', '1');
+            }
+        }
+    };
 
     return (
         <>
@@ -96,13 +107,7 @@ export default function NotificationStack() {
                         <div className={styles.imageWrap}>
                             <button
                                 className={styles.close}
-                                onClick={() => {
-                                    setVisible(false);
-                                    setCompleted(true);
-                                    if (typeof window !== 'undefined') {
-                                        sessionStorage.setItem('samara:noticesComplete', '1');
-                                    }
-                                }}
+                                onClick={handleClose}
                                 aria-label="Close"
                             >
                                 <FontAwesomeIcon icon={faXmark} />
@@ -121,11 +126,7 @@ export default function NotificationStack() {
                 </div>
             )}
 
-            {completed && (
-                <Link href="/chat" className={styles.fab} aria-label="Open chat">
-                    <Image src={chatImg} alt="" width={0} height={0} className={styles.imagessss} />
-                </Link>
-            )}
+            {null}
         </>
     );
 }

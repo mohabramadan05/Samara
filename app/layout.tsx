@@ -5,6 +5,7 @@ import { Aclonica } from "next/font/google";
 import Footer from './shared_components/Footer';
 import { Providers } from './providers';
 import NotificationStack from './shared_components/NotificationStack';
+import ChatFab from './shared_components/ChatFab';
 
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -69,6 +70,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <NotificationStack />
+          <ChatFab />
           <Footer />
         </Providers>
       </body>

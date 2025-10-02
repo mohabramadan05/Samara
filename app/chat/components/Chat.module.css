@@ -24,6 +24,40 @@
     transition: box-shadow 0.3s, background 0.3s;
 }
 
+.chatHeader {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+}
+
+.exitButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #2b2b2b;
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border: 1px solid #3a3a3a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.exitButton:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(90deg, #2b2b2b 0%, #333 60%);
+    color: #CE9E00;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.exitButton:active {
+    transform: translateY(0);
+}
+
 /* Tablet styles */
 @media (max-width: 1024px) {
     .chatBox {

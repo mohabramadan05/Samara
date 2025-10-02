@@ -5,7 +5,7 @@ import styles from './NewsletterDialog.module.css';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faEnvelope, faCheck, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { faFacebookF, faInstagram, faTiktok } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faInstagram, faTiktok, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { useAuth } from '@/lib/authContext';
 import logo from '../assets/logo.png';
 
@@ -161,6 +161,9 @@ const NewsletterDialog: React.FC<NewsletterDialogProps> = ({ isOpen, onClose }) 
                                 </a>
                                 <a href="https://www.tiktok.com/@irsamarahub" target="_blank" rel="noopener noreferrer">
                                     <FontAwesomeIcon icon={faTiktok} />
+                                </a>
+                                <a href="https://www.youtube.com/@irsamarahub" target="_blank" rel="noopener noreferrer">
+                                    <FontAwesomeIcon icon={faYoutube} />
                                 </a>
                             </div>
                         </div>

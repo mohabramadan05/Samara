@@ -3,7 +3,8 @@ import styles from './Chat.module.css';
 import { useChat } from 'ai/react';
 import { Button, Loader } from '@mantine/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faRobot, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faRobot, faUser, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 export default function Chat() {
   const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
@@ -13,6 +14,12 @@ export default function Chat() {
   return (
     <form onSubmit={handleSubmit} className={styles.chatContainer}>
       <div className={styles.chatBox}>
+        <div className={styles.chatHeader}>
+          <Link href="/" className={styles.exitButton}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+            <span>Exit Chat</span>
+          </Link>
+        </div>
         <div className={styles.messagesArea}>
           {messages.map((m) => (
             <div
