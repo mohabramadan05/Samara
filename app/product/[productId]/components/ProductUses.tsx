@@ -9,9 +9,7 @@ const ProductUses = ({ uses }: ProductUsesProps) => {
 
     // Default fallback if no uses provided
     if (!usesText) {
-        usesText = `
-      
-    `;
+        usesText = ``;
     }
 
     return (

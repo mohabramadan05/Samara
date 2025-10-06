@@ -34,6 +34,7 @@ const Footer = () => {
         || pathname?.includes('forgot-password')
         || pathname?.includes('new-password')
         || pathname?.includes('reset-password')
+        || pathname?.includes('chat')
         || pathname?.includes('verify-email')
         || pathname?.includes('samara'); // Added check for admin pages
 

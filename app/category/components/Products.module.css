@@ -1,10 +1,9 @@
-
 .productsSection {
     padding: 50px 0;
     background-color: #252525;
     color: #fff;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .productsHeader {
@@ -92,6 +91,11 @@
 
     100% {
         opacity: 0.6;
+    }
+}
+@media (max-width: 480px) {
+    .productsList {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

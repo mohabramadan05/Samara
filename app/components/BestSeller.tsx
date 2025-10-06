@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,6 @@ import ProductCard from '../shared_components/ProductCard';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Define interfaces
 interface Product {
     id: number;
     name: string;
@@ -25,26 +24,23 @@ interface Product {
 }
 
 const BestSeller = () => {
-    // State for products and UI
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const { isAuthenticated, user } = useAuth();
 
-    // Fetch best selling products
+    const productGridRef = useRef<HTMLDivElement>(null);
+    const scrollAmount = 300; // pixels per arrow click
+
     useEffect(() => {
         const fetchBestSellers = async () => {
             try {
                 setLoading(true);
-
-                // Fetch products from API route - adjust endpoint as needed
                 const response = await fetch('/api/products/bestsellers');
-
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.error || 'Failed to fetch best sellers');
                 }
-
                 const data = await response.json();
                 setProducts(data.products);
             } catch (error) {
@@ -54,18 +50,17 @@ const BestSeller = () => {
                 setLoading(false);
             }
         };
-
         fetchBestSellers();
     }, []);
 
     useEffect(() => {
         AOS.init({});
     }, []);
+
     useEffect(() => {
         AOS.refresh();
     });
 
-    // Add to cart
     const handleAddToCart = async (product: Product) => {
         try {
             if (!isAuthenticated || !user) {
@@ -73,15 +68,10 @@ const BestSeller = () => {
                 return;
             }
 
-            // Call API route to add item to cart
             const response = await fetch(`/api/cart/add?user=${user.id}&product=${product.id}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    quantity: 1
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quantity: 1 })
             });
 
             if (!response.ok) {
@@ -97,7 +87,6 @@ const BestSeller = () => {
         }
     };
 
-    // Add to cart (sync wrapper for ProductCard)
     const handleAddToCartSync = (product: {
         id: number;
         name: string;
@@ -109,36 +98,41 @@ const BestSeller = () => {
         discount_price?: number;
     }) => {
         const fullProduct = products.find(p => p.id === product.id);
-        if (fullProduct) {
-            handleAddToCart(fullProduct);
+        if (fullProduct) handleAddToCart(fullProduct);
+    };
+
+    const scrollPrev = () => {
+        if (productGridRef.current) {
+            productGridRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+    };
+
+    const scrollNext = () => {
+        if (productGridRef.current) {
+            productGridRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
     };
 
     return (
-        <section className={styles.bestSeller} >
-            <h1 className={styles.sectionTitle} >
+        <section className={styles.bestSeller}>
+            <h1 className={styles.sectionTitle}>
                 <FontAwesomeIcon icon={faStar} className={styles.starIcon} style={{ color: "#FFD700", fontSize: "1.2rem" }} />
                 <span className={styles.best}>Best</span> Seller
             </h1>
 
             <div className={styles.productSlider}>
-                <button className={styles.sliderButton}  aria-label="Previous">
+                <button className={styles.sliderButton} onClick={scrollPrev} aria-label="Previous">
                     <FontAwesomeIcon icon={faChevronLeft} className={styles.sliderIcon} />
                 </button>
 
                 {loading ? (
                     <div className={styles.loadingContainer}>
-                        <Image
-                            src={loadingGif}
-                            alt="Loading products..."
-                            width={80}
-                            className={styles.loadingGif}
-                        />
+                        <Image src={loadingGif} alt="Loading products..." width={80} className={styles.loadingGif} />
                     </div>
                 ) : error ? (
                     <div className={styles.error}>{error}</div>
                 ) : (
-                    <div className={styles.productGrid} >
+                    <div className={styles.productGrid} ref={productGridRef}>
                         {products.map((product) => (
                             <ProductCard
                                 key={product.id}
@@ -149,7 +143,7 @@ const BestSeller = () => {
                     </div>
                 )}
 
-                <button className={styles.sliderButton}  aria-label="Next">
+                <button className={styles.sliderButton} onClick={scrollNext} aria-label="Next">
                     <FontAwesomeIcon icon={faChevronRight} className={styles.sliderIcon} />
                 </button>
             </div>
@@ -157,4 +151,4 @@ const BestSeller = () => {
     );
 };
 
-export default BestSeller; 
+export default BestSeller;

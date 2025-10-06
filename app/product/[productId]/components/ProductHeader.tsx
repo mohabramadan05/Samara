@@ -52,9 +52,17 @@ const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPri
 
             <div className={styles.productImageContainer2}>
                 {allImages.map((img, index) => (
-                    <Image className={styles.productImage2} key={index} src={img} alt={name} width={100} height={100} />
+                    <div key={index} className={styles.imageWrapper}>
+                        <Image
+                            src={img}
+                            alt={name}
+                            fill
+                            className={styles.productImage2}
+                        />
+                    </div>
                 ))}
             </div>
+
 
             <div className={styles.productDescription}>
                 <h1 className={styles.descriptionTitle}>Description:</h1>

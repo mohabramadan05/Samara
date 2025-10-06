@@ -11,14 +11,15 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 40px;
-    
+
 }
 
-.sectionTitle{
+.sectionTitle {
     display: flex;
     align-items: baseline;
     gap: 10px;
 }
+
 .hotdealsContent h1 {
     font-size: 32px;
     font-weight: 600;
@@ -173,8 +174,9 @@
     }
 
     .productGrid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, 165px);
+        gap: 15px;
+        /* grid-template-columns: 1fr 1fr; */
     }
 
     .loadingContainer {

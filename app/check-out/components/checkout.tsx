@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStarAndCrescent, faLocationDot, faTrashCan, faExclamationTriangle, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 import mapImg from '../../assets/map.png';
-import paymentMethodIcon from '../../assets/image.png';
+import visa from '../../assets/payment/visa.png';
+import mastercard from '../../assets/payment/MasterCard.jpg';
+import maestro from '../../assets/payment/logo-maestro.png';
+import amex from '../../assets/payment/American_Express.png';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import PaymentDialog, { PaymentData } from './PaymentDialog';
@@ -216,7 +219,7 @@ const Checkout = () => {
 
     const handleCitySelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = e.target.value;
-        const city = cities.find(c => c.id === value);
+        const city = cities.find(c => String(c.id) === value);
         setAddressFormData({
             ...addressFormData,
             city_id: value,
@@ -224,6 +227,8 @@ const Checkout = () => {
         });
         setSelectedCity(city || null);
         setShowCityWarning(city?.is_active !== 'Y');
+
+
     };
 
     const handleAddAddress = () => {
@@ -776,12 +781,28 @@ const Checkout = () => {
                         </h3>
 
                         <div className={styles.paymentMethodItem}>
-                            <div className={styles.paymentMethodIcon}>
+                            {/* <div className={styles.paymentMethodIcon}>
                                 <div className={styles.selectedCheck2}>
                                     <div className={styles.selectedCheckInner2}></div>
                                 </div>
                                 <Image src={paymentMethodIcon} alt="payment method" width={100} />
+                            </div> */}
+
+                            <div className={styles.paymentMethod}>
+                                <div className={styles.paymentMethods}>
+                                    <Image className={styles.paymentMethodImage} src={visa} alt="payment method" width={0} height={0} />
+                                </div>
+                                <div className={styles.paymentMethods}>
+                                    <Image className={styles.paymentMethodImage} src={mastercard} alt="payment method" width={0} height={0} />
+                                </div>
+                                <div className={styles.paymentMethods}>
+                                    <Image className={styles.paymentMethodImage} src={amex} alt="payment method" width={0} height={0} />
+                                </div>
+                                <div className={styles.paymentMethods}>
+                                    <Image className={styles.paymentMethodImage} src={maestro} alt="payment method" width={0} height={0} />
+                                </div>
                             </div>
+
                         </div>
 
                     </div>
@@ -880,7 +901,7 @@ const Checkout = () => {
                                     fontWeight: 500,
                                     boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
                                 }}>
-                                    <span style={{ flex: 1 }}>{pointsStatus.message}</span>
+                                    <span style={{ flex: 1, color: pointsStatus.isError ? '#c62828' : '#2e7d2e', }}>{pointsStatus.message}</span>
                                 </div>
                             )}
                             <div className={`${styles.formGroup} ${styles.promocodeGroup}`} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

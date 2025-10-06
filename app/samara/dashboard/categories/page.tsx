@@ -11,33 +11,31 @@ interface Category {
     name: string;
     desc: string;
     image: string;
+    active: string;
 }
 
 export default function CategoriesPage() {
     const [categories, setCategories] = useState<Category[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [addLoading, setAddLoading] = useState(false);
-    const [addError, setAddError] = useState<string | null>(null);
-    const [newCategory, setNewCategory] = useState({ name: '', desc: '', image: '' });
+
+    const [showForm, setShowForm] = useState(false);
+    const [formLoading, setFormLoading] = useState(false);
+    const [formError, setFormError] = useState<string | null>(null);
+
+    const [formData, setFormData] = useState({ id: 0, name: '', desc: '', image: '', active: 'Y' });
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const fetchCategories = useCallback(async () => {
         try {
             setIsLoading(true);
             setError(null);
             let query = supabase.from('categories').select('*');
-            if (searchQuery) {
-                query = query.ilike('name', `%${searchQuery}%`);
-            }
-            // If you have a status field, you can filter here. For now, this is a placeholder.
-            // if (statusFilter) {
-            //     query = query.eq('status', statusFilter);
-            // }
+            if (searchQuery) query = query.ilike('name', `%${searchQuery}%`);
             const { data, error } = await query;
             if (error) throw error;
             setCategories(data || []);
@@ -53,50 +51,78 @@ export default function CategoriesPage() {
     }, [fetchCategories]);
 
     const handleAddCategory = () => {
-        setShowAddForm(true);
-        setAddError(null);
-        setNewCategory({ name: '', desc: '', image: '' });
+        setShowForm(true);
+        setFormError(null);
+        setFormData({ id: 0, name: '', desc: '', image: '', active: 'Y' });
         setImageFile(null);
         if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
-    const handleAddCategorySubmit = async (e: React.FormEvent) => {
+    const handleEditCategory = (category: Category) => {
+        setShowForm(true);
+        setFormError(null);
+        setFormData({
+            id: category.id,
+            name: category.name,
+            desc: category.desc,
+            image: category.image,
+            active: category.active
+        });
+        setImageFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
+
+    const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setAddLoading(true);
-        setAddError(null);
-        if (!newCategory.name.trim()) {
-            setAddError('Category name is required.');
-            setAddLoading(false);
+        setFormLoading(true);
+        setFormError(null);
+
+        if (!formData.name.trim()) {
+            setFormError('Category name is required.');
+            setFormLoading(false);
             return;
         }
-        if (!imageFile) {
-            setAddError('Image is required.');
-            setAddLoading(false);
-            return;
-        }
+
         try {
-            const fileExt = imageFile.name.split('.').pop();
-            const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
-            const { error: uploadError } = await supabase
-                .storage
-                .from('samara.storage')
-                .upload(`categories/${fileName}`, imageFile);
-            if (uploadError) throw uploadError;
-            const { data: publicUrlData } = supabase
-                .storage
-                .from('samara.storage')
-                .getPublicUrl(`categories/${fileName}`);
-            const imageUrl = publicUrlData?.publicUrl || '';
-            const { error: insertError } = await supabase
-                .from('categories')
-                .insert([{ name: newCategory.name.trim(), desc: newCategory.desc.trim(), image: imageUrl }]);
-            if (insertError) throw insertError;
-            setShowAddForm(false);
+            let imageUrl = formData.image;
+
+            if (imageFile) {
+                const fileExt = imageFile.name.split('.').pop();
+                const fileName = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}.${fileExt}`;
+                const { error: uploadError } = await supabase
+                    .storage
+                    .from('samara.storage')
+                    .upload(`categories/${fileName}`, imageFile);
+                if (uploadError) throw uploadError;
+
+                const { data: publicUrlData } = supabase
+                    .storage
+                    .from('samara.storage')
+                    .getPublicUrl(`categories/${fileName}`);
+                imageUrl = publicUrlData?.publicUrl || '';
+            }
+
+            if (formData.id === 0) {
+                // Add new category
+                const { error: insertError } = await supabase
+                    .from('categories')
+                    .insert([{ name: formData.name.trim(), desc: formData.desc.trim(), image: imageUrl, active: formData.active }]);
+                if (insertError) throw insertError;
+            } else {
+                // Update existing category
+                const { error: updateError } = await supabase
+                    .from('categories')
+                    .update({ name: formData.name.trim(), desc: formData.desc.trim(), image: imageUrl, active: formData.active })
+                    .eq('id', formData.id);
+                if (updateError) throw updateError;
+            }
+
+            setShowForm(false);
             fetchCategories();
         } catch {
-            setAddError('Failed to add category. Please try again.');
+            setFormError('Failed to save category. Please try again.');
         } finally {
-            setAddLoading(false);
+            setFormLoading(false);
         }
     };
 
@@ -116,27 +142,26 @@ export default function CategoriesPage() {
                     />
                     <select className={styles.filterSelect} value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
                         <option value="">All Categories</option>
-                        {/* <option value="active">Active</option>
-                        <option value="inactive">Inactive</option> */}
                     </select>
                 </div>
-                {showAddForm && (
-                    <form className={styles.addForm} onSubmit={handleAddCategorySubmit}>
+
+                {showForm && (
+                    <form className={styles.addForm} onSubmit={handleFormSubmit}>
                         <input
                             type="text"
                             placeholder="Category name"
-                            value={newCategory.name}
-                            onChange={e => setNewCategory({ ...newCategory, name: e.target.value })}
+                            value={formData.name}
+                            onChange={e => setFormData({ ...formData, name: e.target.value })}
                             className={styles.searchInput}
-                            disabled={addLoading}
+                            disabled={formLoading}
                         />
                         <input
                             type="text"
                             placeholder="Description"
-                            value={newCategory.desc}
-                            onChange={e => setNewCategory({ ...newCategory, desc: e.target.value })}
+                            value={formData.desc}
+                            onChange={e => setFormData({ ...formData, desc: e.target.value })}
                             className={styles.searchInput}
-                            disabled={addLoading}
+                            disabled={formLoading}
                         />
                         <label className={styles.imageUploadLabel} htmlFor="category-image">
                             {imageFile ? 'Change Image' : 'Upload Image'}
@@ -148,20 +173,33 @@ export default function CategoriesPage() {
                             ref={fileInputRef}
                             onChange={e => setImageFile(e.target.files ? e.target.files[0] : null)}
                             className={styles.searchInput}
-                            disabled={addLoading}
+                            disabled={formLoading}
                         />
                         {imageFile && (
                             <span className={styles.imageFileName}>{imageFile.name}</span>
                         )}
-                        <button type="submit" className={styles.statusButton} disabled={addLoading}>
-                            {addLoading ? 'Adding...' : 'Add Category'}
+
+                        {/* Active/Inactive select */}
+                        <select
+                            className={styles.filterSelect}
+                            value={formData.active}
+                            onChange={e => setFormData({ ...formData, active: e.target.value })}
+                            disabled={formLoading}
+                        >
+                            <option value="Y">Active</option>
+                            <option value="N">Inactive</option>
+                        </select>
+
+                        <button type="submit" className={styles.statusButton} disabled={formLoading}>
+                            {formLoading ? (formData.id === 0 ? 'Adding...' : 'Saving...') : (formData.id === 0 ? 'Add Category' : 'Save Changes')}
                         </button>
-                        <button type="button" className={styles.statusButton} onClick={() => setShowAddForm(false)} disabled={addLoading}>
+                        <button type="button" className={styles.statusButton} onClick={() => setShowForm(false)} disabled={formLoading}>
                             Cancel
                         </button>
-                        {addError && <div className={styles.error}>{addError}</div>}
+                        {formError && <div className={styles.error}>{formError}</div>}
                     </form>
                 )}
+
                 <div className={styles.categoriesList}>
                     {error && <div className={styles.error}>{error}</div>}
                     {isLoading ? (
@@ -174,6 +212,8 @@ export default function CategoriesPage() {
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Image</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -185,9 +225,20 @@ export default function CategoriesPage() {
                                         <td>
                                             {cat.image ? (
                                                 <Image src={cat.image} alt={cat.name} width={60} height={60} style={{ objectFit: 'cover', borderRadius: 8 }} />
-                                            ) : (
-                                                'No image'
-                                            )}
+                                            ) : 'No image'}
+                                        </td>
+                                        <td>{cat.active === "Y" ? "Active" : "Inactive"}</td>
+                                        <td>
+                                            <button className={`${styles.actionButton} ${styles.editButton}`} onClick={() => handleEditCategory(cat)}>
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                </svg>
+                                            </button>
+
+
+
+
                                         </td>
                                     </tr>
                                 ))}
@@ -200,4 +251,4 @@ export default function CategoriesPage() {
             </div>
         </DashboardLayout>
     );
-} 
+}

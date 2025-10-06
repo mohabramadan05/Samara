@@ -3,13 +3,19 @@
     background-color: #252525;
     color: #fff;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .productsHeader {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px 30px;
+}
+
+@media (max-width: 480px) {
+    .productsList {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .productsTitle {

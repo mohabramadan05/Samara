@@ -372,12 +372,14 @@
 
 @media (max-width: 480px) {
     .container {
-        height: 200px;
-        width: 200px;
+        height: 165px;
+        width: 165px;
+        border-radius: 25px;
     }
 
     .image_container {
-        height: 110px;
+        height: 90px;
+
     }
 
     .productRate {
@@ -386,30 +388,46 @@
     }
 
     .productName {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .productCategory {
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .price,
     .discountPrice {
-        font-size: 13px;
+        font-size: 10px;
     }
 
     .oldPrice {
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .perKg {
-        font-size: 7px;
+        font-size: 6px;
     }
 
     .priceContainer {
         gap: 0;
     }
-    
+
+    .productImage {
+        border-radius: 25px 25px 0 0;
+
+    }
+
+    .wishlistButton {
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .wishlistIcon {
+        font-size: 15px;
+    }
+
 }
 
 @media (max-width: 360px) {

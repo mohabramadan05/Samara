@@ -28,7 +28,7 @@ export default function ChatFab({ href = '/chat', ariaLabel = 'Open chat' }: Cha
         if (isAllowed) {
             const timer = setTimeout(() => {
                 setShowMessage(true);
-            }, 120000); // 2 minutes
+            }, 30000); // 2 minutes
             return () => clearTimeout(timer);
         }
     }, [isAllowed]);

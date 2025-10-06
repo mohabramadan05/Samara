@@ -637,13 +637,16 @@
     overflow-x: scroll;
 }
 
-.productImage2 {
+.imageWrapper {
+    position: relative;
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    /* Keeps square shape */
+}
 
-    aspect-ratio: 1/1;
-    height: 250px;
-    width: auto;
-    border-radius: 15px;
+.productImage2 {
     object-fit: cover;
+    border-radius: 15px;
 }
 
 
@@ -811,6 +814,7 @@
 
     .productImageContainer2 {
         display: flex;
+        gap: 10px;
     }
 }
 

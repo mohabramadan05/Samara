@@ -3,7 +3,7 @@
     background-color: #252525;
     color: #fff;
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .productsHeader {
@@ -480,6 +480,12 @@
 
     .productsList {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .productsList {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
