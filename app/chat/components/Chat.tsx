@@ -3,9 +3,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Chat.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import chatImg from '@/app/assets/about-model-image.png';
 import Image from 'next/image';
+import Link from 'next/link';
 // import { supabase } from '@/lib/supabase';
 // import { User } from '@supabase/supabase-js';
 interface Message {
@@ -113,6 +114,10 @@ export default function Chat() {
 
   return (
     <div className={styles.chatContainer}>
+      <Link className={styles.end} href={'/'}>
+        <FontAwesomeIcon icon={faChevronLeft} />
+        <span>End Chat</span>
+      </Link>
       <div className={styles.chatMessages}>
         {messages.map((m) => (
           <div

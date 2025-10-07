@@ -46,6 +46,10 @@ interface Order {
     landmark: string;
     donation: number;
     delivery: number;
+    delivery_comment?: string;
+    delivery_image?: string;
+    delivery_user?: string;
+    delivery_date?: string;
 }
 
 export default function OrdersPage() {
@@ -197,6 +201,10 @@ export default function OrdersPage() {
                                     <th>Delivery</th>
                                     <th>Status</th>
                                     <th>Final Price</th>
+                                    <th>Delivery Comment</th>
+                                    <th>Delivery Image </th>
+                                    <th>Delivery User </th>
+                                    <th>Delivery Date </th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -241,6 +249,10 @@ export default function OrdersPage() {
                                             </span>
                                         </td>
                                         <td>{order.final_price}</td>
+                                        <td>{order.delivery_comment}</td>
+                                        <td>{order.delivery_image}</td>
+                                        <td>{order.delivery_user}</td>
+                                        <td>{order.delivery_date}</td>
                                         <td>
                                             <div className={styles.actionButtons}>
                                                 <button
