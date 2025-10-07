@@ -32,7 +32,10 @@ async function fetchData<T>(url: string): Promise<T> {
     return res.json();
 }
 
+
 export async function POST(req: NextRequest) {
+    const baseUrl = 'https://samarashop.ie';
+
     try {
         const { messages } = await req.json();
 
@@ -45,9 +48,9 @@ export async function POST(req: NextRequest) {
 
         // Fetch current categories, products, and cities
         const [categoriesRes, productsRes, citiesRes] = await Promise.all([
-            fetchData<{ categories: Category[] }>(`${req.nextUrl.origin}/api/categories`),
-            fetchData<{ products: Product[] }>(`${req.nextUrl.origin}/api/products`),
-            fetchData<{ cities: City[] }>(`${req.nextUrl.origin}/api/cities`),
+            fetchData<{ categories: Category[] }>(`${baseUrl}/api/categories`),
+            fetchData<{ products: Product[] }>(`${baseUrl}/api/products`),
+            fetchData<{ cities: City[] }>(`${baseUrl}/api/cities`),
         ]);
 
         const categories = categoriesRes.categories || [];
