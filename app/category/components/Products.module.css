@@ -93,6 +93,7 @@
         opacity: 0.6;
     }
 }
+
 @media (max-width: 480px) {
     .productsList {
         grid-template-columns: repeat(2, 1fr);
@@ -424,7 +425,8 @@
     }
 
     .productsList {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 160px);
+
     }
 }
 

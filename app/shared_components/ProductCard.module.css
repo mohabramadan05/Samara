@@ -430,23 +430,25 @@
 
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
     .container {
-        height: 180px;
-        width: 180px;
+        height: 165px;
+        width: 165px;
+        border-radius: 25px;
     }
 
     .image_container {
-        height: 100px;
+        height: 90px;
+
     }
 
     .productRate {
-        top: 120px;
-        font-size: 8px;
+        top: 130px;
+        font-size: 9px;
     }
 
     .productName {
-        font-size: 11px;
+        font-size: 10px;
     }
 
     .productCategory {
@@ -455,7 +457,7 @@
 
     .price,
     .discountPrice {
-        font-size: 12px;
+        font-size: 10px;
     }
 
     .oldPrice {
@@ -468,6 +470,22 @@
 
     .priceContainer {
         gap: 0;
+    }
+
+    .productImage {
+        border-radius: 25px 25px 0 0;
+
+    }
+
+    .wishlistButton {
+        top: 10px;
+        right: 10px;
+        width: 25px;
+        height: 25px;
+    }
+
+    .wishlistIcon {
+        font-size: 15px;
     }
 }
 

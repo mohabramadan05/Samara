@@ -190,7 +190,7 @@
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
     .hotdeals {
         padding: 25px 15px;
     }
@@ -200,6 +200,7 @@
     }
 
     .productGrid {
+        grid-template-columns: repeat(auto-fit, 160px);
         gap: 15px;
     }
 
