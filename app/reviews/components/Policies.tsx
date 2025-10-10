@@ -53,6 +53,7 @@ const Policies = () => {
                 setTotal(data.total || 0);
                 setLoading(false);
             });
+
     }, [page]);
 
 

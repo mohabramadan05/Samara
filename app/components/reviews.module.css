@@ -54,6 +54,7 @@
 
 .viewAll {
     color: #fff;
+    z-index: 100;
 }
 
 .arrowIcon {
@@ -145,6 +146,7 @@
     .pattern2 {
         width: 150px;
         height: 150px;
+        z-index: 2;
     }
 }
 

@@ -1,7 +1,7 @@
 import styles from './ProductDetail.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faStar } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image';
 
 
@@ -30,6 +30,11 @@ interface ProductHeaderProps {
 
 const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPrice, unitPrice, unit, supplier, qty_per_unit, description, image, images }: ProductHeaderProps) => {
 
+    const getPoints = (price: number) => {
+        if (price <= 0) return 0;
+        return Math.ceil(price / 5);
+    };
+    
     const allImages = [
         image,
         ...(images && images.length > 0
@@ -44,10 +49,19 @@ const ProductHeader = ({ sold_amount, remaining_amount, name, price, discountPri
                     <FontAwesomeIcon icon={faArrowLeft} />
                 </Link>
                 <h1 className={styles.productTitle}>{name}</h1>
-                {/* <div className={styles.priceTag}>
+                <div className={styles.priceTag}>
                     <FontAwesomeIcon icon={faStar} />
-                    <span className={styles.pointsValue}>{rating} pt</span>
-                </div> */}
+                    <span className={styles.pointsValue}>{
+
+                        discountPrice && discountPrice !== 0 ? (
+                            getPoints(discountPrice)
+                        ) : (
+                            getPoints(price)
+                        )
+
+
+                    } pt</span>
+                </div>
             </div>
 
             <div className={styles.productImageContainer2}>

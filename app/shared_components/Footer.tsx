@@ -160,6 +160,9 @@ const Footer = () => {
                         </div>
                     </div>
                 </div>
+                <div className={styles.bottomSection}>
+                    © 2025 Samara&apos;s Corporation.Trademark rights reserved.
+                </div>
             </footer>
             <NewsletterDialog isOpen={showNewsletter} onClose={() => setShowNewsletter(false)} />
         </>

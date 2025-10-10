@@ -13,16 +13,22 @@ export async function GET(req: NextRequest) {
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
 
-    // Get total count
-    const { count } = await supabase
+    // ✅ Get total count with same condition
+    const { count, error: countError } = await supabase
         .from('reviews')
-        .select('*', { count: 'exact', head: true });
+        .select('*', { count: 'exact', head: true })
+        .eq('show', 'Y');
+
+    if (countError) {
+        return NextResponse.json({ error: countError.message }, { status: 500 });
+    }
 
     // Get paginated reviews
     const { data, error } = await supabase
         .from('reviews')
         .select('id, rating, commnet, createdAt, app_users(full_name, image)')
         .order('createdAt', { ascending: false })
+        .eq('show', 'Y')
         .range(from, to);
 
     if (error) {
@@ -30,4 +36,4 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ reviews: data, total: count });
-} 
+}

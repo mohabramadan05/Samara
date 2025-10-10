@@ -176,7 +176,7 @@ export default function CartPage() {
 
     // Calculations
     // const totalItems = cartItems.length;
-    const totalItems = cartItems.reduce((sum, item) => item.quantity, 0);
+    const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity), 0);
     const subtotal = cartItems.reduce((sum, item) => sum + (item.discount_price != 0 ? item.discount_price * item.quantity : item.price * item.quantity), 0);
     const tax = 0;
     const total = subtotal + tax + delivery;

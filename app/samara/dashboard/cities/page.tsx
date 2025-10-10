@@ -70,6 +70,25 @@ export default function CitiesPage() {
         }
     }, [searchQuery, statusFilter]);
 
+    const handleDeleteCity = async (cityId: number) => {
+        if (!confirm('Are you sure you want to delete this city?')) return;
+
+        try {
+            const { error } = await supabase
+                .from('cities')
+                .delete()
+                .eq('id', cityId);
+
+            if (error) throw error;
+
+            // Refresh the list
+            fetchCities();
+        } catch (err) {
+            console.error('Error deleting city:', err);
+            setError('Failed to delete city. Please try again.');
+        }
+    };
+
     useEffect(() => {
         fetchCities();
     }, [fetchCities]);
@@ -207,7 +226,7 @@ export default function CitiesPage() {
                                 <tr>
                                     <th>City Name</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th colSpan={2}>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -225,6 +244,15 @@ export default function CitiesPage() {
                                                 className={`${styles.statusButton} ${city.is_active === 'Y' ? styles.deactivate : styles.activate}`}
                                             >
                                                 {city.is_active === 'Y' ? 'Deactivate' : 'Activate'}
+                                            </button>
+
+                                        </td>
+                                        <td>
+                                            <button
+                                                onClick={() => handleDeleteCity(city.id)}
+                                                className={`${styles.statusButton} ${styles.delete}`}
+                                            >
+                                                Delete
                                             </button>
                                         </td>
                                     </tr>

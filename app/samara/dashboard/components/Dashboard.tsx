@@ -113,6 +113,12 @@ const Dashboard = () => {
                         <p>View and manage customer messages</p>
                     </Link>
 
+                    <Link href="/samara/dashboard/reviews" className={styles.card}>
+                        <div className={styles.cardIcon}>⭐</div>
+                        <h3>Reviews</h3>
+                        <p>Customer reviews management</p>
+                    </Link>
+
                     <Link href="/samara/dashboard/promocodes" className={styles.card}>
                         <div className={styles.cardIcon}>🎟️</div>
                         <h3>Promocodes</h3>

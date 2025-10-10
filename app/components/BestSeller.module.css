@@ -55,6 +55,7 @@
 
 /* ---------- PRODUCT GRID AS HORIZONTAL SCROLLER ---------- */
 .productGrid {
+    width: 100%;
     display: flex;
     gap: 20px;
     overflow-x: auto;
@@ -134,7 +135,7 @@
     }
 
     .productGrid>* {
-        width: 250px;
+        width: 260px;
     }
 }
 
@@ -160,7 +161,7 @@
     }
 
     .productGrid>* {
-        width: 220px;
+        width: 240px;
     }
 }
 
@@ -186,7 +187,7 @@
     }
 
     .productGrid>* {
-        width: 200px;
+        width: 220px;
     }
 }
 
@@ -212,7 +213,7 @@
     }
 
     .productGrid>* {
-        width: 160px;
+        width: 165px;
     }
 
     .bestSeller {
@@ -227,6 +228,6 @@
     }
 
     .productGrid>* {
-        width: 140px;
+        width: 165px;
     }
 }

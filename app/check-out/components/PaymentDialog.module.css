@@ -268,12 +268,12 @@
     }
 
     .row {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
     }
 
     .actions {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 
     .cancelButton,

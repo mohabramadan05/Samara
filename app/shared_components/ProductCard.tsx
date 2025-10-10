@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartSolid, faStar } from '@fortawesome/free-solid-svg-icons';
 import styles from './ProductCard.module.css';
 import Link from 'next/link';
 import AOS from 'aos';
@@ -33,6 +33,11 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
         }
     };
     const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+
+    const getPoints = (price: number) => {
+        if (price <= 0) return 0;
+        return Math.ceil(price / 5);
+    };
 
     useEffect(() => {
         AOS.init({});
@@ -106,10 +111,18 @@ const ProductCard = ({ product, onAddToCart }: ProductCardProps) => {
                             <p className={styles.productName}>{product.name}</p>
                             <div className={styles.categoryContainer}>
                                 <p className={styles.productCategory}>{product.categoryName}</p>
-                                {/* <div className={styles.productRate}>
+                                <div className={styles.productRate}>
                                     <FontAwesomeIcon icon={faStar} />
-                                    &nbsp;&nbsp;<span className={styles.productRateNumber}>245</span>
-                                </div> */}
+                                    &nbsp;&nbsp;<span className={styles.productRateNumber}>
+                                        {product.discount_price && product.discount_price !== 0 ? (
+                                            getPoints(product.discount_price)
+                                        ) : (
+                                            getPoints(product.price)
+                                        )}
+
+
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div className={styles.concave_box}></div>

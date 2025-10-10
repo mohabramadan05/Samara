@@ -13,6 +13,7 @@ import amex from '../../assets/payment/American_Express.png';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
 import PaymentDialog, { PaymentData } from './PaymentDialog';
+import toast from 'react-hot-toast';
 
 
 interface City {
@@ -128,8 +129,25 @@ const Checkout = () => {
         });
     }
 
+    const showWarning = (value: string) => {
+        toast.error(value)
+    };
+
     const handlePlaceOrder = () => {
-        if (isOutOfService) return;
+        const isFormComplete = Object.values(contactFormData).every(value => value.trim() !== '');
+
+        if (!isFormComplete) {
+            showWarning("Please fill all fields");
+            return;
+        }
+        if (!selectedCityObj) {
+            showWarning("You Have to choose address");
+            return;
+        }
+        if (isOutOfService) {
+            showWarning("The chosen area is out of service right now");
+            return;
+        }
         setShowAddressConfirmation(true);
     };
 
@@ -984,12 +1002,12 @@ const Checkout = () => {
                         <button
                             onClick={handlePlaceOrder}
                             className={styles.orderSummaryBuy}
-                            disabled={isOutOfService || !selectedAddressId}
-                            style={{
-                                pointerEvents: isOutOfService ? 'none' : 'auto',
-                                opacity: isOutOfService ? 0.5 : 1,
-                                cursor: isOutOfService ? 'not-allowed' : 'pointer'
-                            }}
+                        // disabled={isOutOfService || !selectedAddressId}
+                        // style={{
+                        //     pointerEvents: isOutOfService ? 'none' : 'auto',
+                        //     opacity: isOutOfService ? 0.5 : 1,
+                        //     cursor: isOutOfService ? 'not-allowed' : 'pointer'
+                        // }}
                         >
                             Place Order  <FontAwesomeIcon icon={faStarAndCrescent} />
                         </button>
@@ -1019,7 +1037,7 @@ const Checkout = () => {
                         borderRadius: '20px',
                         padding: '30px',
                         maxWidth: '500px',
-                        width: '90%',
+                        width: '100%',
                         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
                         animation: 'slideIn 0.3s ease-out',
                         border: '2px solid #CDA00D'
