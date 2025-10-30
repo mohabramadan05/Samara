@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-type SumUpCheckoutResponse = {
-    id?: string;
-    status?: string;
-    [key: string]: unknown;
-};
+
 
 export async function POST(req: NextRequest) {
     try {

@@ -77,8 +77,6 @@ const Checkout = () => {
     const [promoCodeLoading, setPromoCodeLoading] = useState(false);
     const [donationActive, setDonationActive] = useState(false);
     const [charityDiscount, setCharityDiscount] = useState<{ active: boolean; percentage: number }>({ active: false, percentage: 0 });
-    const [showPaymentDialog, setShowPaymentDialog] = useState(false);
-    const [paymentLoading, setPaymentLoading] = useState(false);
     const [pointsLoading, setPointsLoading] = useState(false);
     const [pointsDiscountActive, setPointsDiscountActive] = useState(false);
     const [pointsDiscountAmount, setPointsDiscountAmount] = useState(0);
@@ -152,7 +150,6 @@ const Checkout = () => {
 
     const handleConfirmAddress = () => {
         setShowAddressConfirmation(false);
-        setShowPaymentDialog(true);
     };
 
     const handleCancelAddress = () => {
@@ -254,10 +251,7 @@ const Checkout = () => {
         setShowForm(true);
     };
 
-    const handleClosePaymentDialog = () => {
-        setShowPaymentDialog(false);
-        setPaymentLoading(false);
-    };
+    
 
     // Generate unique random reference
     const generateUniqueReference = () => {
@@ -271,7 +265,6 @@ const Checkout = () => {
     // 🔥 Unified payment handler with integrated SumUp checkout creation
     const handlePaymentAndCheckout = async () => {
     try {
-        setPaymentLoading(true);
 
         // ✅ Validate user and address info
         if (!user || !selectedAddressId) {
@@ -403,7 +396,6 @@ const Checkout = () => {
         return { data, status, reference: uniqueReference, id: data.id, hostedUrl };
     } catch (e) {
         console.error('🔥 Error in handlePaymentAndCheckout:', e);
-        setPaymentLoading(false);
         throw e;
     }
     };

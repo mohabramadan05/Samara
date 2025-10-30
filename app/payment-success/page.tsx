@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
@@ -9,7 +9,6 @@ import Image from 'next/image';
 import loading1 from '../assets/vege.gif';
 
 export default function PaymentSuccessPage() {
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -78,7 +77,6 @@ export default function PaymentSuccessPage() {
       } catch (err) {
         console.error('❌ Payment check error:', err);
       } finally {
-        setLoading(false);
         console.log('🏁 Finished payment check process.');
       }
     };
