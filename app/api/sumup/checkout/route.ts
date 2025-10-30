@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
         const accessToken = process.env.SUMUP_ACCESS_TOKEN;
         const merchantCode = process.env.SUMUP_MERCHANT_CODE;
-        const returnUrl = "http://localhost:3000/payment-success";
+        const returnUrl = "https://samarashop.ie//payment-success";
 
         if (!accessToken || !merchantCode || !returnUrl) {
             return NextResponse.json({ error: 'SumUp configuration missing on server' }, { status: 500 });
