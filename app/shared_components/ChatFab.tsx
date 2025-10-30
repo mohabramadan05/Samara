@@ -17,7 +17,7 @@ export default function ChatFab({ href = '/chat', ariaLabel = 'Open chat' }: Cha
     const pathname = usePathname();
 
     // ✅ Define main routes where the chat should appear (including all their subroutes)
-    const allowedMainPaths = ['/samara', '/samara/admin', '/samara/dashboard', '/chat'];
+    const allowedMainPaths = ['/samara', '/samara/admin', '/samara/dashboard', '/chat','/payment-success'];
 
     // ✅ Check if current path starts with any of the allowed main paths
     const isAllowed = allowedMainPaths.some(path =>

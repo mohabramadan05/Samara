@@ -36,6 +36,7 @@ const Footer = () => {
         || pathname?.includes('reset-password')
         || pathname?.includes('chat')
         || pathname?.includes('verify-email')
+        || pathname?.includes('payment-success')
         || pathname?.includes('samara'); // Added check for admin pages
 
     // Don't render footer on auth pages or admin pages

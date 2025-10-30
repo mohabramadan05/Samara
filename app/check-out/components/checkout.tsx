@@ -12,7 +12,6 @@ import maestro from '../../assets/payment/logo-maestro.png';
 import amex from '../../assets/payment/American_Express.png';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '@/lib/supabase';
-import PaymentDialog, { PaymentData } from './PaymentDialog';
 import toast from 'react-hot-toast';
 
 
@@ -148,7 +147,7 @@ const Checkout = () => {
             showWarning("The chosen area is out of service right now");
             return;
         }
-        setShowAddressConfirmation(true);
+        handlePaymentAndCheckout();
     };
 
     const handleConfirmAddress = () => {
@@ -269,161 +268,144 @@ const Checkout = () => {
 
 
     // create check out 
-    const createCheckOut = async () => {
-        try {
-            const formattedAmount = parseFloat(finalTotal.toFixed(2));
-            const uniqueReference = generateUniqueReference();
-
-            const res = await fetch('/api/sumup/checkout', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    amount: formattedAmount,
-                    currency: 'EUR',
-                    description: 'Website Order',
-                    checkout_reference: uniqueReference,
-                })
-            });
-
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err?.error || 'Failed to create SumUp checkout');
-            }
-
-            const data = await res.json();
-
-            // SumUp creates a hosted checkout. Prefer redirect URL if provided
-            const status = data?.status;
-            return { data, status: status, reference: uniqueReference, id: data.id };
-        } catch (e) {
-            throw e;
-        }
-    }
-
-
-
-    const handlePaymentSubmit = async (paymentData: PaymentData) => {
+    // 🔥 Unified payment handler with integrated SumUp checkout creation
+    const handlePaymentAndCheckout = async () => {
+    try {
         setPaymentLoading(true);
-        try {
-            // Validate required data
-            if (!user || !selectedAddressId) {
-                throw new Error('Missing user or address information');
-            }
 
-            // Validate finalTotal before sending to payment gateway
-            if (typeof finalTotal !== 'number' || isNaN(finalTotal) || finalTotal <= 0) {
-                throw new Error(`Invalid final total: ${finalTotal}. Please refresh the page and try again.`);
-            }
-
-            // Ensure finalTotal is properly formatted (2 decimal places for currency)
-            const formattedAmount = parseFloat(finalTotal.toFixed(2));
-
-            // Additional validation for payment gateway requirements
-            if (formattedAmount < 0.01) {
-                throw new Error('Order total must be at least €0.01');
-            }
-
-            if (formattedAmount > 999999.99) {
-                throw new Error('Order total cannot exceed €999,999.99');
-            }
-
-
-            // Create SumUp checkout via backend
-            const checkout = await createCheckOut();
-            if (checkout?.status !== 'PENDING') {
-                throw new Error('Checkout not created');
-            }
-
-            console.log('Checkout created:', checkout.id);
-
-
-            // Submit card details to SumUp via secure backend
-            const payRes = await fetch(`/api/sumup/checkout/${checkout.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    payment_type: 'card',
-                    card: {
-                        name: paymentData.cardholderName,
-                        number: paymentData.cardNumber.replace(/\s/g, ''),
-                        expiry_month: paymentData.expiryMonth,
-                        expiry_year: paymentData.expiryYear,
-                        cvv: paymentData.cvv,
-                    }
-                })
-            });
-
-            const payJson = await payRes.json().catch(() => ({}));
-            if (!payRes.ok) {
-                throw new Error(payJson?.error || 'Payment authorization failed');
-            }
-
-
-            const paymentStatus = payJson?.status;
-            if (paymentStatus === 'FAILED') {
-                throw new Error(payJson?.message || 'Payment failed');
-            }
-            if (paymentStatus !== 'PAID') {
-                throw new Error('Payment not completed yet');
-            }
-
-            // Prepare order data for database HELOL
-            const orderData = {
-                userId: user.id,
-                addressData: selectedAddress,
-                contactInfo: contactFormData,
-                promoCode: promoCodeStatus.verified ? promoCode : null,
-                discount: discountAmount,
-                charityDiscount: charityDiscountAmount,
-                donation: donationAmount,
-                notes: notes,
-                transactionCode: checkout?.data?.id || checkout?.reference,
-                finalTotal: finalTotal,
-                orderSummary: {
-                    subtotal: orderSummary.subtotal,
-                    tax: orderSummary.tax,
-                    delivery: orderSummary.delivery,
-                    total: orderSummary.total,
-                    items: orderSummary.items
-                },
-            };
-
-            // Create order only when payment is PAID
-            const orderResponse = await fetch('/api/orders/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData)
-            });
-
-            if (!orderResponse.ok) {
-                const errorData = await orderResponse.json();
-                throw new Error(errorData.error || 'Failed to create order');
-            }
-
-            const orderResult = await orderResponse.json();
-
-            // Deduct points when points discount used
-            if (pointsDiscountActive && user?.id) {
-                try {
-                    await fetch('/api/users/wallet', {
-                        method: 'PATCH',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ userId: user.id, deduct: 300 })
-                    });
-                } catch {
-                    // Non-blocking: ignore deduction failure here
-                }
-            }
-
-            // Close dialog and go to order details
-            setShowPaymentDialog(false);
-            setPaymentLoading(false);
-            window.location.href = `/order-details/${orderResult.orderId}`;
-
-        } catch (error) {
-            setPaymentLoading(false);
-            alert(`Payment failed: ${error instanceof Error ? error.message : 'Please try again.'}`);
+        // ✅ Validate user and address info
+        if (!user || !selectedAddressId) {
+        throw new Error('Missing user or address information');
         }
+
+        // ✅ Validate final total
+        if (typeof finalTotal !== 'number' || isNaN(finalTotal) || finalTotal <= 0) {
+        throw new Error(`Invalid final total: ${finalTotal}. Please refresh the page and try again.`);
+        }
+
+        const formattedAmount = parseFloat(finalTotal.toFixed(2));
+
+        if (formattedAmount < 0.01) throw new Error('Order total must be at least €0.01');
+        if (formattedAmount > 999999.99) throw new Error('Order total cannot exceed €999,999.99');
+
+        // ✅ Create unique reference for this checkout
+        const uniqueReference = generateUniqueReference();
+
+        // ✅ Create SumUp checkout via backend
+        const res = await fetch('/api/sumup/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            amount: formattedAmount,
+            currency: 'EUR',
+            description: 'Website Order',
+            checkout_reference: uniqueReference,
+        }),
+        });
+
+        const text = await res.text();
+        let data;
+        
+        try {
+        data = JSON.parse(text);
+        } catch (err) {
+        console.error('❌ Failed to parse JSON:', err);
+        throw new Error('Invalid JSON response from server');
+        }
+
+        const status = data?.parsed?.status;
+        const hostedUrl = data?.parsed?.hosted_checkout_url;
+
+
+        if (!res.ok && status !== 'PENDING') {
+        throw new Error(data?.error || 'Failed to create SumUp checkout');
+        }
+
+
+        // discount type
+        let discount_type = "";
+        let discount_amount = 0;
+        // PointsDiscountActive
+
+        if (promoCodeStatus.verified && charityDiscount.active){
+            discount_type = "charity";
+            discount_amount = charityDiscountAmount;
+        }else if(promoCodeStatus.verified){
+            discount_type = "promocode";
+            discount_amount = discountAmount;
+        }else if(pointsDiscountActive){
+            discount_type = "points";
+            discount_amount = pointsDiscountAmount;
+        }
+
+        // discount amount
+
+
+
+// confirmation
+        try {
+            const res = await fetch('/api/orderpaymentconfirmation', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: user.id,
+                checkout_id: data?.parsed?.id,
+                status: data?.parsed?.status,
+                country: selectedAddress?.country,
+                city: selectedAddress?.city,
+                street: selectedAddress?.street,
+                floor: selectedAddress?.floor,
+                landmark: selectedAddress?.landmark,
+                f_name: contactFormData.firstName,
+                s_name: contactFormData.lastName,
+                phone: contactFormData.phone,
+                email: contactFormData.email,
+                notes: notes,
+                donation: donationActive? "Y" : "N",
+                discount_type: discount_type,
+                discount_amount: discount_amount,
+                promocode: promoCode,
+                final_price: finalTotal,
+                price: orderSummary.total,
+            }),
+            });
+
+            const text = await res.text();
+
+            console.log('Raw response:', text);
+
+            let result;
+            try {
+            result = JSON.parse(text);
+            } catch (err) {
+            console.error('❌ Not valid JSON, check response above');
+            throw err;
+            }
+            if (result.success) {
+            console.log('✅ Inserted successfully:', result.data);
+            } else {
+            console.error('❌ Insert failed:', result.error);
+            }
+        } catch (err) {
+            console.error('⚠️ Network or server error:', err);
+        }
+
+
+        
+        if (!hostedUrl || status !== 'PENDING') {
+        throw new Error('Failed to create valid SumUp checkout session');
+        }
+
+        // ✅ Redirect user to SumUp hosted payment page
+        window.location.href = hostedUrl;
+
+        // Optional: return checkout info if you want to use it elsewhere
+        return { data, status, reference: uniqueReference, id: data.id, hostedUrl };
+    } catch (e) {
+        console.error('🔥 Error in handlePaymentAndCheckout:', e);
+        setPaymentLoading(false);
+        throw e;
+    }
     };
 
 
@@ -603,6 +585,8 @@ const Checkout = () => {
                     setPointsDiscountAmount(0);
                     setPointsStatus({ message: 'Points discount removed.', isError: false });
                 } else {
+                    handleRemovePromoCode();
+                    setPromoCode("points");
                     setPointsDiscountActive(true);
                     setPointsDiscountAmount(10);
                     setPointsStatus({ message: '€10 discount applied using your points.', isError: false });
@@ -1295,14 +1279,7 @@ const Checkout = () => {
                 </div>
             )}
 
-            {/* Payment Dialog */}
-            <PaymentDialog
-                isOpen={showPaymentDialog}
-                onClose={handleClosePaymentDialog}
-                onPaymentSubmit={handlePaymentSubmit}
-                totalAmount={finalTotal}
-                loading={paymentLoading}
-            />
+           
         </section>
     )
 }
