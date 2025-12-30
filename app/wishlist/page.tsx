@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/authContext';
 import { useWishlist } from '@/lib/wishlistContext';
@@ -9,8 +9,6 @@ import Link from 'next/link';
 import Navbar from '@/app/shared_components/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { checkAuthStatus } from '@/lib/supabase';
-import { DebugInfo } from 'next/dist/client/components/react-dev-overlay/types';
 
 export default function WishlistPage() {
     const router = useRouter();
@@ -23,14 +21,7 @@ export default function WishlistPage() {
         refreshWishlist
     } = useWishlist();
 
-    const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
-    const [showDebug, setShowDebug] = useState(false);
-
-    const checkAuth = async () => {
-        const status = await checkAuthStatus();
-        setDebugInfo(status as unknown as DebugInfo);
-        setShowDebug(true);
-    };
+ 
 
     useEffect(() => {
         // Redirect if not authenticated and not loading
@@ -73,12 +64,7 @@ export default function WishlistPage() {
                     <div className="bg-red-100 border border-red-200 text-red-700 px-4 py-3 rounded">
                         {error}
                         <div className="mt-2">
-                            <button
-                                onClick={checkAuth}
-                                className="text-sm underline hover:no-underline"
-                            >
-                                Check Authentication Status
-                            </button>
+                           
                         </div>
                     </div>
                 ) : wishlistItems.length === 0 ? (
@@ -140,31 +126,7 @@ export default function WishlistPage() {
                     </div>
                 )}
 
-                {showDebug && debugInfo && (
-                    <div className="mt-8 p-4 bg-gray-100 rounded-lg">
-                        <div className="flex justify-between mb-2">
-                            <h3 className="font-bold">Debug Info</h3>
-                            <button
-                                onClick={() => setShowDebug(false)}
-                                className="text-gray-500 hover:text-gray-700"
-                            >
-                                Close
-                            </button>
-                        </div>
-                        <pre className="text-xs overflow-auto bg-gray-800 text-white p-4 rounded">
-                            {JSON.stringify(debugInfo, null, 2)}
-                        </pre>
-                    </div>
-                )}
-
-                <div className="flex justify-center mt-4">
-                    <button
-                        onClick={checkAuth}
-                        className="text-sm text-gray-500 hover:text-gray-700"
-                    >
-                        Check Authentication
-                    </button>
-                </div>
+                    
             </div>
         </div>
     );
